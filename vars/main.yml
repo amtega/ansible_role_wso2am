@@ -1,2 +1,37 @@
 ---
 # Role variables
+
+# Versions
+
+wso2am_effective_version: >-
+  {{ (wso2am_version == "latest")
+     | ternary(wso2am_latest_version, wso2am_version) }}
+
+wso2am_installed_version: >-
+  {{ ansible_local.wso2am.version | default("0") }}
+
+# Official download variables
+
+wso2am_official_download_host: https://github.com
+wso2am_official_download_releases_path: /wso2/product-apim/releases
+wso2am_official_download_releases_url: >-
+  {{ wso2am_official_download_host
+     + "/"
+     + wso2am_official_download_releases_path }}
+wso2am_official_download_path: >-
+  {{ wso2am_official_download_releases_path
+     + "/download/v"
+     + wso2am_effective_version }}
+wso2am_official_download_file: "wso2am-{{ wso2am_effective_version }}.zip"
+
+# Indicate if install is required
+
+wso2am_install_required: >-
+  {{ wso2am_effective_version
+     is not version((wso2am_installed_version | string | length > 0)
+                     | ternary(wso2am_installed_version, "0"),
+                     "==")
+     and wso2am_state == "present" }}
+# Paths
+
+wso2am_keystore_path: "{{ wso2am_dir }}/repository/resources/security"

@@ -1,0 +1,30 @@
+---
+# Role install tasks
+
+- block:
+    - name: Setup wso2am destination directory
+      file:
+        path: "{{ wso2am_dir }}"
+        state: directory
+
+    - include_tasks: artifact.yml
+      vars:
+        wso2am_artifact_state: present
+
+    - name: Install wso2am
+      copy:
+        src: >-
+          {{ artifact_result.wso2am.download_path | dirname
+             + "/"
+             + "wso2am-"
+             + wso2am_effective_version | string
+             + "/" }}
+        dest: "{{ wso2am_dir }}"
+        remote_src: yes
+
+    - include_tasks: artifact.yml
+      vars:
+        wso2am_artifact_state: absent
+  tags:
+    - role::wso2am
+    - role::wso2am::install

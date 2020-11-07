@@ -1,2 +1,337 @@
 ---
 # Role default lower priority variables
+
+# State of the wso2am. Can be present or absent
+
+wso2am_state: present
+
+# Version of wso2am to deploy. You can use the keyword latest to install the
+# latest available version
+
+wso2am_version: latest
+
+# Operating system user
+
+wso2am_user: root
+
+# Operating system group
+
+wso2am_group: root
+
+# Where to deploy wso2am
+
+wso2am_dir: /opt/wso2am
+
+# ******************************************************************************
+# TODO: variables pending to be modeled
+# ******************************************************************************
+# # Variables listed here are applicable to all host groups
+# java: java-1.8.0-openjdk
+# java_home: "/etc/alternatives/java_sdk_1.8.0_openjdk"
+# java_opts: "-Dwso2.name={{inventory_hostname.split('.')[0] | lower}}"
+# jvm_mem_opts: "-Xms512m -Xmx3072m"
+#
+# wso2_user: "wso2"
+# work_user: "admin"
+# work_path: "/opt/wso2"
+# images: "{{work_path}}/images"
+# http_proxy: http://hrz-proxy-0001:3128
+#
+# base64_wso2am_super_admin_password: "*****"
+#
+# rsync_script: "rsync-for-carbon-depsync.sh"
+#
+# startup_timeout: 400
+#
+# ################################################################
+# #                      Maquinas                                #
+# ################################################################
+# am_manager:         "stg-wso2apim-c01-0001.xunta.local"
+# am_worker:          "stg-wso2apim-c01-0002.xunta.local"
+# am_worker_mgmt:     "stg-wso2apim-c01-0002-mgmt-001.xunta.local"
+# gw_hostname:        "wso2apim.stg.xunta.local"
+# keycloak_server:    "rh-sso.stg.xunta.local"
+#
+# ip_node1: "10.112.32.225"
+# ip_node2: "10.112.32.226"
+#
+# ################################################################
+# #                          Puertos                             #
+# ################################################################
+# am_port:         "9444"
+# ******************************************************************************
+
+# Server settings
+
+wso2am_hostname: "{{ inventory_hostname }}"
+wso2am_node_ip: "{{ ansible_facts.default_ipv4.address }}"
+wso2am_offset: 1
+wso2am_mode: single
+wso2am_base_path: ${carbon.protocol}://${carbon.host}:${carbon.management.port}
+wso2am_server_role: default
+
+# Super admin username/password
+
+wso2am_super_admin_username: admin
+wso2am_super_admin_password: password
+wso2am_super_admin_create_account: yes
+
+# User store settings
+
+wso2am_user_store_type: database_unique_id
+
+# ******************************************************************************
+# TODO: variables pending to be modeled
+# ******************************************************************************
+# #SP
+# worker_offset: "1"
+#
+# dashboard_offset: "3"
+# dashboard_port:   "9643"
+# manager_port:     "9543"
+#
+# ################################################################
+# #                          Drivers                             #
+# ################################################################
+# keymanager_keycloak_jar: "amtega-apim-keymanager-keycloak.jar"
+# driver1: "ojdbc8_1.0.0.jar"
+# driver2: "ojdbc8.jar"
+# ******************************************************************************
+
+# Keystore setttings
+
+wso2am_keystore_file_name: wso2carbon.jks
+wso2am_keystore_type: JKS
+wso2am_keystore_password: changeme
+wso2am_keystore_alias: wso2carbon
+wso2am_keystore_key_password: changeme
+
+# ******************************************************************************
+# TODO: variables pending to be modeled
+# ******************************************************************************
+# truststore_password:  "changeme"
+#
+# ca_root_01: "prdrootca01.cer"
+# ca_root_02: "prdrootca02.cer"
+# ******************************************************************************
+
+# Database settings
+
+wso2am_db_type: mysql
+wso2am_db_url: "jdbc:msqyl@//{{ inventory_hostname }}:3306/wso2am"
+wso2am_db_username: wso2am
+wso2am_db_password: changeme
+wso2am_db_validation_quey: "SELECT 1 FROM DUAL"
+wso2am_db_pool_max_active: 300
+wso2am_db_pool_log_abandoned: yes
+wso2am_db_pool_remove_abandoned: yes
+wso2am_db_pool_remove_abandoned_timeout: 300
+
+# Shared database settings
+
+wso2am_shared_db_type: mysql
+wso2am_shared_db_url: "jdbc:msqyl@//{{ inventory_hostname }}:3306/wso2am"
+wso2am_shared_db_username: wso2am
+wso2am_shared_db_password: changeme
+wso2am_shared_db_validation_quey: "SELECT 1 FROM DUAL"
+wso2am_shared_db_pool_max_active: 300
+wso2am_shared_db_pool_log_abandoned: yes
+wso2am_shared_db_pool_remove_abandoned: yes
+wso2am_shared_db_pool_remove_abandoned_timeout: 300
+
+# Gateway environments
+
+wso2am_gateway_environments:
+  - name: Production and Sandbox
+    type: hybrid
+    display_in_api_console: yes
+    description: >-
+      This is a hybrid gateway that handles both production and sandbox token
+      traffic.
+    show_as_token_endpoint_url: yes
+    service_url: >-
+      https://{{ inventory_hostname }}:${mgt.transport.https.port}/services/
+    username: "{{ wso2am_super_admin_username }}"
+    password: "{{ wso2am_super_admin_password }}"
+    ws_endpoint: "ws://{{ inventory_hostname }}:9099"
+    wss_endpoint: "wss://{{ inventory_hostname }}:8099"
+    http_endpoint: "http://{{ gw_hostname }}:${http.nio.port}"
+    https_endpoint: "https://{{ gw_hostname }}:443"
+
+# Analytics settings
+
+wso2am_analytics_enable: no
+wso2am_analytics_store_api_url: "https://{{ inventory_hostname }}:7444"
+wso2am_analytics_username: "{{ wso2am_super_admin_username }}"
+wso2am_analytics_password: "{{ wso2am_super_admin_password }}"
+wso2am_analytics_event_publisher_type: default
+wso2am_analytics_event_publisher_impl: >-
+  org.wso2.carbon.apimgt.usage.publisher.APIMgtUsageDataBridgeDataPublisher
+wso2am_analytics_publish_response_size: yes
+
+wso2am_analytics_url_groups:
+  - analytics_url:
+      - "tcp://{{ inventory_hostname }}:7612"
+    analytics_auth_url:
+      - "ssl://{{ inventory_hostname }}:7712"
+    type: loadbalance
+
+# OAuth settins
+
+wso2am_oauth_config_set_jwt_as_opaque_token: yes
+wso2am_oauth_config_enable_outbound_auth_header: yes
+
+# Dev portal settings
+
+wso2am_devportal_enable_key_provisioning: yes
+wso2am_devportal_enable_application_sharing: yes
+
+# CORS settings
+
+wso2am_cors_allow_origins: *
+wso2am_cors_allow_methods:
+  - GET
+  - PUT
+  - POST
+  - DELETE
+  - PATCH
+  - OPTIONS
+wso2am_cors_allow_headers:
+  - authorization
+  - Access-Control-Allow-Origin
+  - Content-Type
+  - SOAPAction
+  - apikey
+wso2am_cors_allow_credentials: no
+
+# Throttling settings
+
+wso2am_throttling_enable_data_publishing: yes
+wso2am_throttling_enable_policy_deploy: yes
+wso2am_throttling_enable_blacklist_condition: yes
+wso2am_throttling_enable_persistence: yes
+wso2am_throttling_throttle_decision_endpoints:
+  - "tcp://{{ ansible_facts.default_ipv4.address }}:5674"
+
+wso2am_throttling_url_groups:
+  - traffic_manager_urls:
+      - "tcp://{{ ansible_facts.default_ipv4.address }}:9612"
+    traffic_manager_auth_urls:
+      - "ssl://{{ ansible_facts.default_ipv4.address }}:9712"
+
+# Event handlers settings
+
+wso2am_event_handlers:
+  - name: userPostSelfRegistration
+    subscriptions:
+      - POST_ADD_USER
+
+# Service provider settings
+
+wso2am_service_provider_sp_name_regex: '^"[\\sa-zA-Z0-9._-]":*$'
+
+# Clustering settings
+
+wso2am_clustering_membership_scheme: wka
+wso2am_clustering_domain: wso2.am.domain
+wso2am_clustering_local_member_host: "{{ ansible_facts.default_ipv4.address }}"
+wso2am_clustering_local_member_port: 4200
+wso2am_clustering_members:
+  - "{{ ansible_facts.default_ipv4.address }}:4200"
+wso2am_clustering_shutdown_hook_enable: no
+wso2am_clustering_logging_type: log4j
+
+# ******************************************************************************
+# TODO: variables pending to be modeled
+# ******************************************************************************
+# db_shared_name: "stg01gen"
+# db_shared_user: plasoa_apim_shared
+# db_shared_password: *****
+# db_shared_url: "jdbc:oracle:thin:@//{{wso2am_db_host}}:{{wso2am_db_port}}/{{db_service_name}}"
+#
+# db_am_name: "stg01gen"
+# db_am_driver: oracle.jdbc.driver.OracleDriver
+#
+# db_metrics_name: "stg01gen"
+# db_metrics_user: plasoa_apimdas_metrics
+# db_metrics_password: *****
+# db_metrics_url: "jdbc:oracle:thin:@//{{wso2am_db_host}}:{{wso2am_db_port}}/{{db_service_name}}"
+# db_metrics_driver: oracle.jdbc.driver.OracleDriver
+#
+# db_mb_name: "stg01gen"
+# db_mb_user: plasoa_apim_mbstore
+# db_mb_password: *****
+# db_mb_url: "jdbc:oracle:thin:@//{{wso2am_db_host}}:{{wso2am_db_port}}/{{db_service_name}}"
+# db_mb_driver: oracle.jdbc.driver.OracleDriver
+#
+# db_analytics_name: "stg01gen"
+# db_analytics_user: plasoa_apimdas_analytic
+# db_analytics_password: *****
+# db_analytics_url: "jdbc:oracle:thin:@//{{wso2am_db_host}}:{{wso2am_db_port}}/{{db_service_name}}"
+# db_analytics_driver: oracle.jdbc.driver.OracleDriver
+# ******************************************************************************
+#
+# ###### Analytics Dashboard ######
+# dashboard_adminServiceBaseUrl: "https://stg-wso2apim-c01-0001.xunta.local:9444"
+# dashboard_kmDcrUrl: "https://plasoa-apim.stg.xunta.local/client-registration/v0.16/register"
+# dashboard_kmTokenUrlForRedirection: "https://plasoa-apim.stg.xunta.local/oauth2"
+# dashboard_kmTokenUrl: "https://stg-wso2apim-c01-0001.xunta.local:9444/oauth2"
+# dashboard_baseUrl: "https://apimdas.stg.xunta.local"
+# dashboard_publisherUrl: "https://stg-wso2apim-c01-0001.xunta.local:9444"
+# dashboard_externalLogoutUrl: "https://plasoa-apim.stg.xunta.local/oidc/logout"
+# ###########################
+#
+# ###########################################################################
+# #                  LDAP: OJO verificar la PASSWORD                        #
+# ###########################################################################
+# DomainName: amtega
+# ConnectionURL: "ldap://ad.xunta.local:389"
+# ConnectionName: "CN=app-plasoa_apim--stg,OU=plasoa_apim,OU=Usuarios de Aplicaciones,OU=Recursos,DC=xunta,DC=local"
+# ConnectionPassword: "*****"
+# UserSearchBase: "dc=xunta,dc=local"
+# UserNameAttribute: "sAMAccountName"
+# UserNameSearchFilter: "(&amp;(objectClass=user)(sAMAccountName=?))"
+# UserNameListFilter: "(sAMAccountName=*)"
+# GroupSearchBase: "dc=xunta,dc=local"
+# GroupEntryObjectClass: "group"
+# GroupNameAttribute: "sAMAccountName"
+# GroupNameSearchFilter: "(&amp;(objectClass=group)(sAMAccountName=?)))"
+# GroupNameListFilter: "(objectClass=group)"
+# ******************************************************************************
+
+wso2am_deployment:
+  "[apim.key_manager]":
+    key_manager_client_impl: "es.xunta.amtega.apim.KeycloakKeyManager" #FIXME
+    key_validation_handler_impl: "es.xunta.amtega.apim.KeyValidationHandler" #FIXME
+
+  "[apim.key_manager.configuration]": #FIXME
+    jwks_uri: >-
+      https://{{ keycloak_server }}/auth/realms/plasoa/protocol/openid-connect/certs
+
+# Force install even if the role detects that it is not necessary
+
+wso2am_force_install: no
+
+# The role will try to identify the wso2am artifact to download from the
+# official site.
+#
+# If you want to download the artifact from another repository yo need to
+# configure the `wso2am_artifact` variable to point to a local/public repository
+# that contains the required artifact
+#
+# Take a look to `amtega.artifact` role documentation to known about supported
+# types of artifacts, their specific settings and how to configure a proxy if
+# necessary
+
+wso2am_artifact:
+    type: https
+    host: "{{ wso2am_official_download_host }}"
+    path: "{{ wso2am_official_download_path }}"
+    file: "{{ wso2am_official_download_file }}"
+    dest: /tmp
+    timeout: 120
+    validate_certs: yes
+
+# Hide sensitive information
+# FIXME: Implement no_log in sensitive tasks
+wso2am_no_log: no
