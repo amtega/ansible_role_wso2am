@@ -2,9 +2,9 @@
 # Role dependencies
 
 galaxy_info:
-  role_name: role
-  author: author name
-  description: role description
+  role_name: wso2am
+  author: Juan Antonio Valiño García
+  description: Setup WSO2 API Manager
   company: AMTEGA - Xunta de Galicia
   license: GPLv3 or EUPL
   min_ansible_version: 2.9
@@ -13,10 +13,25 @@ galaxy_info:
       versions:
         - 6
         - 7
+        - 8
     - name: Fedora
       versions:
         - 29
         - 30
-  galaxy_tags: []
+  galaxy_tags:
+    - wso2
+    - wso2am
+    - ap
+    - manager
 
-dependencies: []
+dependencies:
+  - role: amtega.check_platform
+    vars:
+      check_platform_distributions:
+        centos: 6
+        fedora: 29
+        redhat: 6
+
+  - role: amtega.proxy_client
+    vars:
+      proxy_client_permanent: no

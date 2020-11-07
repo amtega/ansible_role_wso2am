@@ -1,0 +1,29 @@
+---
+# Gather latest version tasks
+
+- block:
+    - name: Check internet connection availability
+      wait_for:
+        host: "{{ host }}"
+        port: "{{ (port is none) | ternary(80, port | int) }}"
+        connect_timeout: 1
+        timeout: 1
+      vars:
+        host: "{{ wso2am_official_download_host | urlsplit('hostname') }}"
+        port: "{{ wso2am_official_download_host | urlsplit('port') }}"
+      register: wso2am_check_internet_result
+
+    - name: Setup wso2am latest version
+      when: wso2am_version == "latest"
+      set_fact:
+         wso2am_latest_version: >-
+           {{ lookup("url",
+                     wso2am_official_download_releases_url,
+                     wantlist=True)
+              | select("search", "/releases/tag")
+              | first
+              | regex_replace('.*/releases/tag/v(.*)".*', '\1')
+              | trim }}
+  when: wso2am_version == "latest"
+  tags:
+    - role::wso2am
