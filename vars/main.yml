@@ -32,6 +32,31 @@ wso2am_install_required: >-
                      | ternary(wso2am_installed_version, "0"),
                      "==")
      and wso2am_state == "present" }}
+
+# Packages
+
+wso2am_pakages_os:
+  all:
+    all:
+      java: present
+      java-devel: present
+      tar: present
+      unzip: present
+      rsync: present
+
+# Database drivers
+
+wsoam_database_drivers:
+  mysql:
+    version: 8.0.11
+    name: "com.mysql.cj.jdbc.Driver"
+  oracle:
+    version: 12.2.0.1
+    name: "oracle.jdbc.driver.OracleDriver"
+    download_user: acme
+    download_password: acme
+
+
 # Paths
 
 wso2am_keystore_path: "{{ wso2am_dir }}/repository/resources/security"

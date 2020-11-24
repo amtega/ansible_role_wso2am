@@ -14,27 +14,21 @@ create_admin_account = "{{ wso2am_super_admin_create_account | bool | lower }}"
 [user_store]
 type = "{{ wso2am_user_store_type }}"
 
-[database.apim_db]
-type = "{{ wso2am_db_type }}"
-url = "{{ wso2am_db_url }}"
-username = "{{ wso2am_db_username }}"
-password = "{{ wso2am_db_password }}"
-validationQuery = "{{ wso2am_db_validation_quey }}"
-pool_options.maxActive = "{{ wso2am_db_pool_max_active }}"
-pool_options.logAbandoned = "{{ wso2am_db_pool_log_abandoned }}"
-pool_options.removeAbandoned = "{{ wso2am_db_pool_remove_abandoned | bool | lower }}"
-pool_options.removeAbandonedTimeout = "{{ wso2am_db_pool_remove_abandoned_timeout }}"
-
-[database.shared_db]
-type = "{{ wso2am_shared_db_type }}"
-url = "{{ wso2am_shared_db_url }}"
-username = "{{ wso2am_shared_db_username }}"
-password = "{{ wso2am_shared_db_password }}"
-validationQuery = "{{ wso2am_shared_db_validation_quey }}"
-pool_options.maxActive = "{{ wso2am_shared_db_pool_max_active }}"
-pool_options.logAbandoned = "{{ wso2am_shared_db_pool_log_abandoned }}"
-pool_options.removeAbandoned = "{{ wso2am_shared_db_pool_remove_abandoned | bool | lower }}"
-pool_options.removeAbandonedTimeout = "{{ wso2am_shared_db_pool_remove_abandoned_timeout }}"
+{% for database in wsoam_databases %}
+[database.{{ database.profile }}_db]
+type = "{{ database.db_type }}"
+url = "{{ database.db_url }}"
+username = "{{ database.db_username }}"
+password = "{{ database.db_password }}"
+{% if database.db_driver is defined %}
+driver = "{{ database.db_driver }}"
+{% endif %}
+validationQuery = "{{ database.db_validation_quey }}"
+pool_options.maxActive = "{{ database.db_pool_max_active }}"
+pool_options.logAbandoned = "{{ database.db_pool_log_abandoned }}"
+pool_options.removeAbandoned = "{{ database.db_pool_remove_abandoned | bool | lower }}"
+pool_options.removeAbandonedTimeout = "{{ database.db_pool_remove_abandoned_timeout }}"
+{% endfor %}
 
 [keystore.tls]
 file_name = "{{ wso2am_keystore_file_name }}"

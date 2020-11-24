@@ -1,0 +1,24 @@
+---
+# Mysql config tasks
+
+- block:
+    - name: Dowmload jdbc connector
+      import_role: amtega_mysql_jdbc_connector
+      vars:
+        mysql_jdbc_connector_version: "{{ wsoam_database_drivers[mysql].version}}"
+
+    - name: Copy jdbc jar to wsoam lib directory
+      copy:
+        src: "{{ mysql_jdbc_connector_jar_path }}"
+        dest: "{{ wso2am_dir }}/repository/components/lib/"
+        remote_src: yes
+
+    - name: Fill databases
+      import_tasks: import_mysql.yml
+      loop: "{{ wsoam_databases }}"
+      loop_control:
+        loop_var: wsoam_database
+      when: wsoam_databases_fill
+  tags:
+    - role::wso2am
+    - role::wso2am::databases

@@ -25,6 +25,9 @@
     - include_tasks: artifact.yml
       vars:
         wso2am_artifact_state: absent
+
+    - include_tasks: databases/install.yml
+
   tags:
     - role::wso2am
     - role::wso2am::install

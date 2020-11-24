@@ -1,0 +1,8 @@
+---
+# Role install tasks
+
+- block:
+    - include_tasks: "{{ wsoam_database_platform }}.yml"
+  tags:
+    - role::wso2am
+    - role::wso2am::databases

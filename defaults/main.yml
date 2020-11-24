@@ -117,27 +117,40 @@ wso2am_keystore_key_password: changeme
 
 # Database settings
 
-wso2am_db_type: mysql
-wso2am_db_url: "jdbc:msqyl@//{{ inventory_hostname }}:3306/wso2am"
-wso2am_db_username: wso2am
-wso2am_db_password: changeme
-wso2am_db_validation_quey: "SELECT 1 FROM DUAL"
-wso2am_db_pool_max_active: 300
-wso2am_db_pool_log_abandoned: yes
-wso2am_db_pool_remove_abandoned: yes
-wso2am_db_pool_remove_abandoned_timeout: 300
+wsoam_databases_fill: yes
 
-# Shared database settings
+wsoam_database_platform: mysql
 
-wso2am_shared_db_type: mysql
-wso2am_shared_db_url: "jdbc:msqyl@//{{ inventory_hostname }}:3306/wso2am"
-wso2am_shared_db_username: wso2am
-wso2am_shared_db_password: changeme
-wso2am_shared_db_validation_quey: "SELECT 1 FROM DUAL"
-wso2am_shared_db_pool_max_active: 300
-wso2am_shared_db_pool_log_abandoned: yes
-wso2am_shared_db_pool_remove_abandoned: yes
-wso2am_shared_db_pool_remove_abandoned_timeout: 300
+# Array with all databases involved in intallation
+# note: in mysql scenario, db_driver is only required if mysql version is higher than 8.0.x
+wso2am_databases:
+  - profile: apim
+    db_name: wso2am_apim
+    db_type: "{{ wsoam_database_platform }}"
+    db_url: "jdbc:msqyl@//{{ inventory_hostname }}:3306/wso2am_apim"
+    db_username: wso2am
+    db_password: changeme
+    db_driver: "{{ wsoam_database_drivers[wsoam_database_platform].name }}"
+    db_validation_quey: "SELECT 1 FROM DUAL"
+    db_pool_max_active: 300
+    db_pool_log_abandoned: yes
+    db_pool_remove_abandoned: yes
+    db_pool_remove_abandoned_timeout: 300
+    db_load_script_path: "{{ wso2am_dir }}/dbscripts/apimgt/{{ wsoam_database_platform }}.sql"
+
+  - profile: shared
+    db_name: wso2am_shared
+    db_type: "{{ wsoam_database_platform }}"
+    db_url: "jdbc:msqyl@//{{ inventory_hostname }}:3306/wso2am_shared"
+    db_username: wso2am
+    db_password: changeme
+    db_driver: "{{ wsoam_database_drivers[wsoam_database_platform].name }}"
+    db_validation_quey: "SELECT 1 FROM DUAL"
+    db_pool_max_active: 300
+    db_pool_log_abandoned: yes
+    db_pool_remove_abandoned: yes
+    db_pool_remove_abandoned_timeout: 300
+    db_load_script_path: "{{ wso2am_dir }}/dbscripts/{{ wsoam_database_platform }}.sql"
 
 # Gateway environments
 
@@ -188,7 +201,7 @@ wso2am_devportal_enable_application_sharing: yes
 
 # CORS settings
 
-wso2am_cors_allow_origins: *
+wso2am_cors_allow_origins: '*'
 wso2am_cors_allow_methods:
   - GET
   - PUT
