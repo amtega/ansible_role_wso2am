@@ -28,12 +28,14 @@ dependencies:
   - role: amtega.check_platform
     vars:
       check_platform_distributions:
-        centos: 6
+        centos: 7
         fedora: 29
-        redhat: 6
+        redhat: 7
 
   - role: amtega.proxy_client
     vars:
       proxy_client_permanent: no
 
-  - role: amtega.oracle_java
+  - role: amtega.packages
+    vars:
+      packages_os: "{{ wso2am_pakages_os }}"

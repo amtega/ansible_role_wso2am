@@ -15,6 +15,12 @@
         dest: "{{ wso2am_dir }}/repository/components/lib/"
         remote_src: yes
 
+    - name: Fill databases
+      import_tasks: import_oracle.yml
+      loop: "{{ wsoam_databases }}"
+      loop_control:
+        loop_var: wsoam_database
+      when: wsoam_databases_fill
   tags:
     - role::wso2am
     - role::wso2am::databases

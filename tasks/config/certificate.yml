@@ -1,0 +1,14 @@
+---
+# certificate config tasks
+
+- block:
+    - name: create keystore
+      java_keystore:
+        name: "{{ wso2am_keystore_alias }}"
+        dest: "{{ wso2am_keystore_path[wso2am_profile] }}/{{ wso2am_keystore_file_name }}"
+        password: "{{ wso2am_keystore_password }}"
+
+    # TODO: import certificate files with java_certs module 
+  tags:
+    - role::wso2am
+    - role::wso2am::config

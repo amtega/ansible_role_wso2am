@@ -1,0 +1,18 @@
+---
+# Role config tasks
+
+- block:
+    - name: create service file for wso2am {{ wso2am_profile }}
+      template:
+        src: "wso2am_{{ wso2am_profile }}_service.j2"
+        dest: "{{ wso2am_service_dir }}/wso2am_{{ wso2am_profile }}.service"
+
+    - name: start wso2am {{ wso2am_profile }} service
+      service:
+        name: wso2am_{{ wso2am_profile }}
+        enabled: yes
+        state: started
+
+  tags:
+    - role::wso2am
+    - role::wso2am::config

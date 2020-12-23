@@ -22,7 +22,10 @@ wso2am_official_download_path: >-
   {{ wso2am_official_download_releases_path
      + "/download/v"
      + wso2am_effective_version }}
-wso2am_official_download_file: "wso2am-{{ wso2am_effective_version }}.zip"
+wso2am_official_download_file:
+  server: "wso2am-{{ wso2am_effective_version }}.zip"
+  worker: "wso2am-analytics-{{ wso2am_effective_version }}.zip"
+  dashboard: "wso2am-analytics-{{ wso2am_effective_version }}.zip"
 
 # Indicate if install is required
 
@@ -59,4 +62,12 @@ wsoam_database_drivers:
 
 # Paths
 
-wso2am_keystore_path: "{{ wso2am_dir }}/repository/resources/security"
+wso2am_keystore_path:
+  server: "{{ wso2am_dir }}/repository/resources/security"
+  worker: "{{ wso2am_dir }}/resources/security"
+  dashboard: "{{ wso2am_dir }}/resources/security"
+  
+wso2am_config_file:
+  server: "{{ wso2am_dir }}/repository/conf/deployment.toml"
+  worker: "{{ wso2am_dir }}/conf/worker/deployment.yaml"
+  dashboard: "{{ wso2am_dir }}/conf/dashboard/deployment.yaml"

@@ -22,6 +22,24 @@ wso2am_group: root
 
 wso2am_dir: /opt/wso2am
 
+# Where deploy service file
+wso2am_service_dir: /lib/systemd/system
+
+# Define install profile. Server, worker and analitys are valid values.
+
+wso2am_profile: server
+
+# Java related variables
+
+wso2am_java_home: /usr/lib/jvm/jre
+
+wso2am_java_opts:
+  - "-Dwso2.name={{inventory_hostname.split('.')[0] | lower}}"
+
+wso2am_java_memory_opts:
+  - "-Xms512m"
+  - "-Xmx3072m"
+
 # ******************************************************************************
 # TODO: variables pending to be modeled
 # ******************************************************************************
@@ -121,13 +139,15 @@ wsoam_databases_fill: yes
 
 wsoam_database_platform: mysql
 
+wsoam_database_server_host: "{{ inventory_hostname }}"
+
 # Array with all databases involved in intallation
 # note: in mysql scenario, db_driver is only required if mysql version is higher than 8.0.x
 wso2am_databases:
   - profile: apim
     db_name: wso2am_apim
     db_type: "{{ wsoam_database_platform }}"
-    db_url: "jdbc:msqyl@//{{ inventory_hostname }}:3306/wso2am_apim"
+    db_url: "jdbc:msqyl@//{{ wsoam_database_server_host }}:3306/wso2am_apim"
     db_username: wso2am
     db_password: changeme
     db_driver: "{{ wsoam_database_drivers[wsoam_database_platform].name }}"
@@ -141,7 +161,7 @@ wso2am_databases:
   - profile: shared
     db_name: wso2am_shared
     db_type: "{{ wsoam_database_platform }}"
-    db_url: "jdbc:msqyl@//{{ inventory_hostname }}:3306/wso2am_shared"
+    db_url: "jdbc:msqyl@//{{ wsoam_database_server_host }}:3306/wso2am_shared"
     db_username: wso2am
     db_password: changeme
     db_driver: "{{ wsoam_database_drivers[wsoam_database_platform].name }}"

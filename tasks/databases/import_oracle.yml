@@ -1,0 +1,10 @@
+---
+# Oracle import tasks
+
+- block:
+
+  # TODO: import oracle ddl
+
+  tags:
+    - role::wso2am
+    - role::wso2am::databases
