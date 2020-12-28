@@ -22,7 +22,10 @@ wso2am_official_download_path: >-
   {{ wso2am_official_download_releases_path
      + "/download/v"
      + wso2am_effective_version }}
-wso2am_official_download_file: "wso2am-{{ wso2am_effective_version }}.zip"
+wso2am_official_download_file:
+  server: "wso2am-{{ wso2am_effective_version }}.zip"
+  worker: "wso2am-analytics-{{ wso2am_effective_version }}.zip"
+  dashboard: "wso2am-analytics-{{ wso2am_effective_version }}.zip"
 
 # Indicate if install is required
 
@@ -32,6 +35,39 @@ wso2am_install_required: >-
                      | ternary(wso2am_installed_version, "0"),
                      "==")
      and wso2am_state == "present" }}
+
+# Packages
+
+wso2am_pakages_os:
+  all:
+    all:
+      java: present
+      java-devel: present
+      tar: present
+      unzip: present
+      rsync: present
+
+# Database drivers
+
+wsoam_database_drivers:
+  mysql:
+    version: 8.0.11
+    name: "com.mysql.cj.jdbc.Driver"
+  oracle:
+    version: 12.2.0.1
+    name: "oracle.jdbc.driver.OracleDriver"
+    download_user: acme
+    download_password: acme
+
+
 # Paths
 
-wso2am_keystore_path: "{{ wso2am_dir }}/repository/resources/security"
+wso2am_keystore_path:
+  server: "{{ wso2am_dir }}/repository/resources/security"
+  worker: "{{ wso2am_dir }}/resources/security"
+  dashboard: "{{ wso2am_dir }}/resources/security"
+  
+wso2am_config_file:
+  server: "{{ wso2am_dir }}/repository/conf/deployment.toml"
+  worker: "{{ wso2am_dir }}/conf/worker/deployment.yaml"
+  dashboard: "{{ wso2am_dir }}/conf/dashboard/deployment.yaml"

@@ -22,6 +22,24 @@ wso2am_group: root
 
 wso2am_dir: /opt/wso2am
 
+# Where deploy service file
+wso2am_service_dir: /lib/systemd/system
+
+# Define install profile. Server, worker and analitys are valid values.
+
+wso2am_profile: server
+
+# Java related variables
+
+wso2am_java_home: /usr/lib/jvm/jre
+
+wso2am_java_opts:
+  - "-Dwso2.name={{inventory_hostname.split('.')[0] | lower}}"
+
+wso2am_java_memory_opts:
+  - "-Xms512m"
+  - "-Xmx3072m"
+
 # ******************************************************************************
 # TODO: variables pending to be modeled
 # ******************************************************************************
@@ -117,27 +135,42 @@ wso2am_keystore_key_password: changeme
 
 # Database settings
 
-wso2am_db_type: mysql
-wso2am_db_url: "jdbc:msqyl@//{{ inventory_hostname }}:3306/wso2am"
-wso2am_db_username: wso2am
-wso2am_db_password: changeme
-wso2am_db_validation_quey: "SELECT 1 FROM DUAL"
-wso2am_db_pool_max_active: 300
-wso2am_db_pool_log_abandoned: yes
-wso2am_db_pool_remove_abandoned: yes
-wso2am_db_pool_remove_abandoned_timeout: 300
+wsoam_databases_fill: yes
 
-# Shared database settings
+wsoam_database_platform: mysql
 
-wso2am_shared_db_type: mysql
-wso2am_shared_db_url: "jdbc:msqyl@//{{ inventory_hostname }}:3306/wso2am"
-wso2am_shared_db_username: wso2am
-wso2am_shared_db_password: changeme
-wso2am_shared_db_validation_quey: "SELECT 1 FROM DUAL"
-wso2am_shared_db_pool_max_active: 300
-wso2am_shared_db_pool_log_abandoned: yes
-wso2am_shared_db_pool_remove_abandoned: yes
-wso2am_shared_db_pool_remove_abandoned_timeout: 300
+wsoam_database_server_host: "{{ inventory_hostname }}"
+
+# Array with all databases involved in intallation
+# note: in mysql scenario, db_driver is only required if mysql version is higher than 8.0.x
+wso2am_databases:
+  - profile: apim
+    db_name: wso2am_apim
+    db_type: "{{ wsoam_database_platform }}"
+    db_url: "jdbc:msqyl@//{{ wsoam_database_server_host }}:3306/wso2am_apim"
+    db_username: wso2am
+    db_password: changeme
+    db_driver: "{{ wsoam_database_drivers[wsoam_database_platform].name }}"
+    db_validation_quey: "SELECT 1 FROM DUAL"
+    db_pool_max_active: 300
+    db_pool_log_abandoned: yes
+    db_pool_remove_abandoned: yes
+    db_pool_remove_abandoned_timeout: 300
+    db_load_script_path: "{{ wso2am_dir }}/dbscripts/apimgt/{{ wsoam_database_platform }}.sql"
+
+  - profile: shared
+    db_name: wso2am_shared
+    db_type: "{{ wsoam_database_platform }}"
+    db_url: "jdbc:msqyl@//{{ wsoam_database_server_host }}:3306/wso2am_shared"
+    db_username: wso2am
+    db_password: changeme
+    db_driver: "{{ wsoam_database_drivers[wsoam_database_platform].name }}"
+    db_validation_quey: "SELECT 1 FROM DUAL"
+    db_pool_max_active: 300
+    db_pool_log_abandoned: yes
+    db_pool_remove_abandoned: yes
+    db_pool_remove_abandoned_timeout: 300
+    db_load_script_path: "{{ wso2am_dir }}/dbscripts/{{ wsoam_database_platform }}.sql"
 
 # Gateway environments
 
@@ -188,7 +221,7 @@ wso2am_devportal_enable_application_sharing: yes
 
 # CORS settings
 
-wso2am_cors_allow_origins: *
+wso2am_cors_allow_origins: '*'
 wso2am_cors_allow_methods:
   - GET
   - PUT

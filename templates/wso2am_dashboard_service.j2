@@ -1,0 +1,19 @@
+[Unit]
+Description=WSO2 APi Manager {{ wso2am_profile }}
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Type=forking
+PIDFile={{product_home}}/wso2/dashboard/runtime.pid
+ExecStart={{product_home}}/wso2/dashboard/bin/carbon.sh start
+ExecStop={{product_home}}/wso2/dashboard/bin/carbon.sh stop
+Environment="JAVA_HOME={{ wso2am_java_home }}"
+Environment="CARBON_HOME={{ wso2am_dir }}"
+Environment="JAVA_OPTS={{ wso2am_java_opts | join(' ') }}"
+Environment="JVM_MEM_OPTS={{ wso2am_java_memory_opts | join(' ') }}"
+User={{ wso2am_user }}
+Group={{ wso2am_group }}
+
+[Install]
+WantedBy=multi-user.target

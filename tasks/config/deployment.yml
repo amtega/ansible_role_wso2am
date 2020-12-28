@@ -1,0 +1,10 @@
+---
+# Role config tasks
+
+- block:
+    - template:
+        src: "deployment_{{ wso2am_profile }}.j2"
+        dest: "{{ wso2am_config_file.wso2am_profile }}"
+  tags:
+    - role::wso2am
+    - role::wso2am::config
