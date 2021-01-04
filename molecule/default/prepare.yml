@@ -3,5 +3,5 @@
 - name: Prepare
   hosts: molecule_hosts
   gather_facts: no
-  tasks:
-    - debug: msg="Preparation tasks"
+  roles:
+    - amtega.mysql

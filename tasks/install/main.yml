@@ -21,15 +21,17 @@
              + "/" }}
         dest: "{{ wso2am_dir }}"
         remote_src: yes
+      when: artifact_result.wso2am.changed | bool
 
     - include_tasks: artifact.yml
       vars:
         wso2am_artifact_state: absent
 
-    - include_tasks: databases/install.yml
+    - include_tasks: mysql.yml
+      when: wso2am_mysql_databases | length > 0
 
-    - include_tasks: config/main.yml
-
+    - include_tasks: oracle.yml
+      when: wso2am_oracle_databases | length > 0
   tags:
     - role::wso2am
     - role::wso2am::install

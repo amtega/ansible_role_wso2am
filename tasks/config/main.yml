@@ -5,7 +5,6 @@
     - include_tasks: deployment.yml
     - include_tasks: certificate.yml
     - include_tasks: service.yml
-
   tags:
     - role::wso2am
     - role::wso2am::config

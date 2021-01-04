@@ -3,10 +3,20 @@
 - block:
     - include_tasks: latest.yml
 
-    - include_tasks: install.yml
+    - include_tasks: install/main.yml
       when:
         - wso2am_state == "present"
         - wso2am_install_required | bool or wso2am_force_install | bool
+      tags:
+        - role::wso2am::install
+
+    # - include_tasks: config/main.yml
+    #   tags:
+    #     - role::wso2am::config
+    #
+    # - include_tasks: service/main.yml
+    #   tags:
+    #     - role::wso2am::service
 
     # TODO:
     # - include_tasks: uninstall.yml

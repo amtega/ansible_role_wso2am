@@ -47,27 +47,44 @@ wso2am_pakages_os:
       unzip: present
       rsync: present
 
-# Database drivers
+# FIXME: Database drivers
 
 wsoam_database_drivers:
   mysql:
-    version: 8.0.11
-    name: "com.mysql.cj.jdbc.Driver"
+
+    name:
   oracle:
     version: 12.2.0.1
-    name: "oracle.jdbc.driver.OracleDriver"
+
     download_user: acme
     download_password: acme
 
-
 # Paths
 
-wso2am_keystore_path:
+wso2am_systemd_service_dir: /lib/systemd/system
+
+wso2am_keystore_path_map:
   server: "{{ wso2am_dir }}/repository/resources/security"
   worker: "{{ wso2am_dir }}/resources/security"
   dashboard: "{{ wso2am_dir }}/resources/security"
-  
-wso2am_config_file:
+
+wso2am_deployment_path_map:
   server: "{{ wso2am_dir }}/repository/conf/deployment.toml"
   worker: "{{ wso2am_dir }}/conf/worker/deployment.yaml"
   dashboard: "{{ wso2am_dir }}/conf/dashboard/deployment.yaml"
+
+# Databases
+
+wso2am_mysql_databases: >-
+  {{ wso2am_databases
+     | selectattr("type", "in", ["mariadb", "mysql"])
+     | selectattr("populate", "defined")
+     | selectattr("populate", "equalto", true)
+     | list }}
+
+wso2am_oracle_databases: >-
+  {{ wso2am_databases
+     | selectattr("type", "in", ["oracle"])
+     | selectattr("populate", "defined")
+     | selectattr("populate", "equalto", true)
+     | list }}

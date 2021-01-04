@@ -1,13 +1,13 @@
 [Unit]
-Description=WSO2 APi Manager {{ wso2am_profile }}
+Description=WSO2 API Manager {{ wso2am_profile }}
 Requires=network-online.target
 After=network-online.target
 
 [Service]
 Type=forking
-PIDFile={{product_home}}/wso2/dashboard/runtime.pid
-ExecStart={{product_home}}/wso2/dashboard/bin/carbon.sh start
-ExecStop={{product_home}}/wso2/dashboard/bin/carbon.sh stop
+PIDFile={{ wsoam_dir }}/wso2/worker/runtime.pid
+ExecStart={{ wsoam_dir }}/wso2/worker/bin/carbon.sh start
+ExecStop={{ wsoam_dir }}/wso2/worker/bin/carbon.sh stop
 Environment="JAVA_HOME={{ wso2am_java_home }}"
 Environment="CARBON_HOME={{ wso2am_dir }}"
 Environment="JAVA_OPTS={{ wso2am_java_opts | join(' ') }}"
