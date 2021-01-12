@@ -4,6 +4,7 @@ node_ip = "{{ wso2am_node_ip }}"
 offset = "{{ wso2am_offset }}"
 mode = "{{ wso2am_mode }}"
 base_path = "̣{{ wso2am_base_path }}"
+discard_empty_caches =  "{{ wso2am_discard_empty_caches | bool | lower }}"
 server_role = "{{ wso2am_server_role }}"
 
 [super_admin]
@@ -14,22 +15,22 @@ create_admin_account = "{{ wso2am_super_admin_create_account | bool | lower }}"
 [user_store]
 type = "{{ wso2am_user_store_type }}"
 
-{% for database in wsoam_databases %}
-[database.{{ database.profile }}_db]
-type = "{{ database.db_type }}"
-url = "{{ database.db_url }}"
-username = "{{ database.db_username }}"
-password = "{{ database.db_password }}"
-{% if database.db_driver is defined %}
-driver = "{{ database.db_driver }}"
+{% for database in wso2am_databases %}
+[database.{{ database.id }}_db]
+type = "{{ database.type }}"
+url = "{{ database.url }}"
+username = "{{ database.username }}"
+password = "{{ database.password }}"
+{% if database.driver is defined %}
+driver = "{{ database.driver }}"
 {% endif %}
-validationQuery = "{{ database.db_validation_quey }}"
-pool_options.maxActive = "{{ database.db_pool_max_active }}"
-pool_options.logAbandoned = "{{ database.db_pool_log_abandoned }}"
-pool_options.removeAbandoned = "{{ database.db_pool_remove_abandoned | bool | lower }}"
-pool_options.removeAbandonedTimeout = "{{ database.db_pool_remove_abandoned_timeout }}"
-{% endfor %}
+validationQuery = "{{ database.validation_quey }}"
+pool_options.maxActive = "{{ database.pool_max_active }}"
+pool_options.logAbandoned = "{{ database.pool_log_abandoned | bool | lower }}"
+pool_options.removeAbandoned = "{{ database.pool_remove_abandoned | bool | lower }}"
+pool_options.removeAbandonedTimeout = "{{ database.pool_remove_abandoned_timeout }}"
 
+{% endfor %}
 [keystore.tls]
 file_name = "{{ wso2am_keystore_file_name }}"
 type = "{{ wso2am_keystore_type }}"
@@ -53,6 +54,16 @@ http_endpoint = "{{ ge.http_endpoint }}"
 https_endpoint = "{{ ge.https_endpoint }}"
 {% endfor %}
 
+{% for cache in wso2am_caches %}
+[apim.cache.{{ cache.id }}]
+enable = "{{ cache.enable | bool | lower }}"
+{% if cache.enable is defined %}
+{% endif %}
+{% if cache.expiry_time is defined %}
+expiry_time = "{{ cache.expiry_time  }}"
+{% endif %}
+
+{% endfor %}
 [apim.analytics]
 enable = "{{ wso2am_analytics_enable | bool | lower }}"
 store_api_url = "{{ wso2am_analytics_store_api_url }}"
@@ -60,7 +71,7 @@ username =  "{{ wso2am_analytics_username }}"
 password =  "{{ wso2am_analytics_password }}"
 event_publisher_type = "{{ wso2am_analytics_event_publisher_type }}"
 event_publisher_impl = "{{ wso2am_analytics_event_publisher_impl }}"
-publish_response_size =  "{{ wso2am_analytics_ publish_response_size | bool | lower }}"
+publish_response_size =  "{{ wso2am_analytics_publish_response_size | bool | lower }}"
 
 {% for aug in wso2am_analytics_url_groups %}
 [[apim.analytics.url_group]]

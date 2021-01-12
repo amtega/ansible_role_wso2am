@@ -10,9 +10,9 @@
       tags:
         - role::wso2am::install
 
-    # - include_tasks: config/main.yml
-    #   tags:
-    #     - role::wso2am::config
+    - include_tasks: config/main.yml
+      tags:
+        - role::wso2am::config
     #
     # - include_tasks: service/main.yml
     #   tags:

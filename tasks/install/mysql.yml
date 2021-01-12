@@ -25,6 +25,7 @@
         login_port: "{{ wso2am_database_item.url.split('/').2.split(':').1 }}"
         login_user: "{{ wso2am_database_item.username }}"
         login_password: "{{ wso2am_database_item.password }}"
+        encoding: "{{ wso2am_database_item.encoding | default('latin1') }}"
         state: import
         target: "{{ wso2am_database_item.load_script_path }}"
       loop: "{{ wso2am_mysql_databases }}"

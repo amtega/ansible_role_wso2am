@@ -14,18 +14,22 @@ wso2am_installed_version: >-
 
 wso2am_official_download_host: https://github.com
 wso2am_official_download_releases_path: /wso2/product-apim/releases
+
 wso2am_official_download_releases_url: >-
   {{ wso2am_official_download_host
      + "/"
      + wso2am_official_download_releases_path }}
+
 wso2am_official_download_path: >-
   {{ wso2am_official_download_releases_path
      + "/download/v"
      + wso2am_effective_version }}
-wso2am_official_download_file:
-  server: "wso2am-{{ wso2am_effective_version }}.zip"
-  worker: "wso2am-analytics-{{ wso2am_effective_version }}.zip"
-  dashboard: "wso2am-analytics-{{ wso2am_effective_version }}.zip"
+
+wso2am_official_download_file: "wso2am-{{ wso2am_effective_version }}.zip"
+
+# FIXME:
+  # worker: "wso2am-analytics-{{ wso2am_effective_version }}.zip"
+  # dashboard: "wso2am-analytics-{{ wso2am_effective_version }}.zip"
 
 # Indicate if install is required
 
@@ -68,10 +72,12 @@ wso2am_keystore_path_map:
   worker: "{{ wso2am_dir }}/resources/security"
   dashboard: "{{ wso2am_dir }}/resources/security"
 
-wso2am_deployment_path_map:
-  server: "{{ wso2am_dir }}/repository/conf/deployment.toml"
-  worker: "{{ wso2am_dir }}/conf/worker/deployment.yaml"
-  dashboard: "{{ wso2am_dir }}/conf/dashboard/deployment.yaml"
+wso2am_deployment_path: "{{ wso2am_dir }}/repository/conf/deployment.toml"
+
+# FIXME
+# wso2am_deployment_path_map:
+#   worker: "{{ wso2am_dir }}/conf/worker/deployment.yaml"
+#   dashboard: "{{ wso2am_dir }}/conf/dashboard/deployment.yaml"
 
 # Databases
 

@@ -22,10 +22,6 @@ wso2am_group: root
 
 wso2am_dir: /opt/wso2am
 
-# FIXME: Define install profile. Valid values are server, worker and analitys
-
-wso2am_profile: server
-
 # Java related variables
 
 wso2am_java_home: /usr/lib/jvm/jre
@@ -83,6 +79,7 @@ wso2am_node_ip: "{{ ansible_facts.default_ipv4.address }}"
 wso2am_offset: 1
 wso2am_mode: single
 wso2am_base_path: ${carbon.protocol}://${carbon.host}:${carbon.management.port}
+wso2am_discard_empty_caches: yes
 wso2am_server_role: default
 
 # Super admin username/password
@@ -141,6 +138,7 @@ wso2am_databases:
     url: "jdbc:mysql@//localhost:3306/wso2am_apim"
     username: root
     password: ChanGeMe_1234
+    encoding: latin1
     driver: com.mysql.cj.jdbc.Driver
     driver_version: 8.0.11
     validation_quey: "SELECT 1 FROM DUAL"
@@ -157,6 +155,7 @@ wso2am_databases:
     url: "jdbc:mysql@//localhost:3306/wso2am_shared"
     username: root
     password: ChanGeMe_1234
+    encoding: latin1
     driver: com.mysql.cj.jdbc.Driver
     driver_version: 8.0.11
     validation_quey: "SELECT 1 FROM DUAL"
@@ -183,12 +182,44 @@ wso2am_gateway_environments:
     password: "{{ wso2am_super_admin_password }}"
     ws_endpoint: "ws://{{ inventory_hostname }}:9099"
     wss_endpoint: "wss://{{ inventory_hostname }}:8099"
-    http_endpoint: "http://{{ gw_hostname }}:${http.nio.port}"
-    https_endpoint: "https://{{ gw_hostname }}:443"
+    http_endpoint: "http://{{ inventory_hostname }}:${http.nio.port}"
+    https_endpoint: "https://{{ inventory_hostname }}:443"
+
+# Cache settings
+
+wso2am_caches:
+  - id: gateway_token
+    enable: no
+    expiry_time: 900s
+
+  - id: resource
+    enable: no
+    expiry_time: 900s
+
+  - id: km_token
+    enable: no
+    expiry_time: 15m
+
+  - id: recent_apis
+    enable: no
+
+  - id: scopes
+    enable: no
+
+  - id: publisher_roles
+    enable: no
+
+  - id: jwt_claim
+    enable: no
+    expiry_time: 15m
+
+  - id: tags
+    enable: no
+    expiry_time: 2m
 
 # Analytics settings
 
-wso2am_analytics_enable: no
+wso2am_analytics_enable: yes
 wso2am_analytics_store_api_url: "https://{{ inventory_hostname }}:7444"
 wso2am_analytics_username: "{{ wso2am_super_admin_username }}"
 wso2am_analytics_password: "{{ wso2am_super_admin_password }}"
@@ -355,7 +386,7 @@ wso2am_artifact:
     type: https
     host: "{{ wso2am_official_download_host }}"
     path: "{{ wso2am_official_download_path }}"
-    file: "{{ wso2am_official_download_file[wso2am_profile] }}"
+    file: "{{ wso2am_official_download_file }}"
     dest: /tmp
     timeout: 120
     validate_certs: yes
