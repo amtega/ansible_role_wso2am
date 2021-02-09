@@ -18,6 +18,42 @@ platforms:
       - molecule_hosts
       - molecule_hosts_centos
       - molecule_hosts_centos_7
+  - name: "centos8-${INSTANCE_UUID:-1}"
+    image: centos:8
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    groups:
+      - molecule_hosts
+      - molecule_hosts_centos
+      - molecule_hosts_centos_8
+  - name: "fedora32-${INSTANCE_UUID:-1}"
+    image: fedora:32
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    groups:
+      - molecule_hosts
+      - molecule_hosts_fedora
+      - molecule_hosts_fedora_32
+  - name: "fedora33-${INSTANCE_UUID:-1}"
+    image: fedora:33
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    groups:
+      - molecule_hosts
+      - molecule_hosts_fedora
+      - molecule_hosts_fedora_33
 provisioner:
   name: ansible
   config_options:
@@ -28,13 +64,7 @@ provisioner:
     hosts:
       molecule_hosts:
         vars:
-          mysql_version: 5.7
-          mysql_disable_gpg_check: yes
-          mysql_replication: no
-          mysql_root_password: ChanGeMe_1234
-          mysql_no_log: no
 
-          wso2am_force_install: yes
       molecule_hosts_fedora:
         vars:
           ansible_python_interpreter: /usr/bin/python3

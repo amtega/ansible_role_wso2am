@@ -11,13 +11,12 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - 6
         - 7
         - 8
     - name: Fedora
       versions:
-        - 29
-        - 30
+        - 32
+        - 33
   galaxy_tags:
     - wso2
     - wso2am
@@ -29,7 +28,7 @@ dependencies:
     vars:
       check_platform_distributions:
         centos: 7
-        fedora: 29
+        fedora: 32
         redhat: 7
 
   - role: amtega.proxy_client

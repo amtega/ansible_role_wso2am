@@ -1,0 +1,38 @@
+---
+# Uninstall tasks
+
+- block:
+    - name: Disable and stop wso2am services
+      systemd:
+        name: "{{ (wso2am_systemd_service_path | basename | splitext).0 }}"
+        state: stopped
+        enabled: no
+        daemon_reload: yes
+      failed_when:
+        - wso2am_uninstall_service_result.msg is defined
+        - wso2am_uninstall_service_result.msg
+          is not search("Could not find the requested service")
+      register: wso2am_disable_stop_service_result
+
+    - name: Uninstall wso2am systemd services
+      file:
+        path: "{{ wso2am_systemd_service_path }}"
+        state: absent
+      register: wso2am_remove_systemd_services_result
+
+    - name: Reload systemd
+      command: systemctl daemon-reload
+      when: wso2am_remove_systemd_services_result is changed
+
+    - name: Remove wso2am facts file
+      file:
+        path: "{{ wso2am_facts_file_path }}"
+        state: absent
+
+    - name: Uninstall wso2am directory
+      file:
+        path: "{{ wso2am_dir }}"
+        state: absent
+  tags:
+    - role::wso2am
+    - role::wso2am::uninstall

@@ -6,6 +6,9 @@
       template:
         src: deployment.toml.j2
         dest: "{{ wso2am_deployment_path }}"
+        owner: "{{ wso2am_user }}"
+        group: "{{ wso2am_group }}"
+        mode: 0640
   tags:
     - role::wso2am
     - role::wso2am::config
