@@ -12,7 +12,7 @@
           {{ artifact_result.wso2am.download_path | dirname
              + "/"
              + "wso2am-"
-             + wso2am_effective_version | string
+             + wso2am_effective_version.split("+") | first
              + "/" }}
         dest: "{{ wso2am_dir }}"
         remote_src: yes
