@@ -1,0 +1,28 @@
+{{ ansible_managed | comment }}
+
+{%- macro render_value(value) -%}
+{%- if value is boolean -%}
+{{ value | string | lower }}
+{%- else -%}
+{{ value | to_json }}
+{%- endif -%}
+{%- endmacro -%}
+
+{{ "\n" }}
+{% for section in wso2am_deployment.keys() | list %}
+{% if wso2am_deployment[section] is mapping %}
+{{ section }}
+{% for option in wso2am_deployment[section].keys() | list %}
+{{ option }} = {{ render_value(wso2am_deployment[section][option]) }}
+{% endfor %}
+
+{% else %}
+{% for repeteable_section in wso2am_deployment[section] %}
+{{ section }}
+{% for option in repeteable_section.keys() | list %}
+{{ option }} = {{ render_value(repeteable_section[option]) }}
+{% endfor %}
+
+{% endfor %}
+{% endif %}
+{% endfor %}

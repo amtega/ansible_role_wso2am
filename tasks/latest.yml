@@ -21,6 +21,10 @@
                      wso2am_official_download_releases_url,
                      wantlist=True)
               | select("search", "/releases/tag")
+              | reject("search", "-M[0-9]*")
+              | reject("search", "-RC[0-9]*")
+              | reject("search", "-beta[0-9]*")
+              | reject("search", "-alpha[0-9]*")
               | first
               | regex_replace('.*/releases/tag/v(.*)".*', '\1')
               | trim }}

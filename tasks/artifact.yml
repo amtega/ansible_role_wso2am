@@ -10,11 +10,10 @@
       download: "{{ wso2am_install_required | bool }}"
       version: "{{ wso2am_effective_version }}"
       state: "{{ wso2am_artifact_state }}"
-      dest: "{{ wso2am_dir }}"
       unarchive: yes
       owner: "{{ wso2am_user }}"
       group: "{{ wso2am_group }}"
-      mode: "0775"
+      mode: u=rwX,g=rwX,o=
       no_log: "{{ wso2am_no_log | bool }}"
     artifact: "{{ wso2am_artifact | combine(override) }}"
   tags:

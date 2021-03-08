@@ -1,0 +1,20 @@
+---
+# Role service tasks
+
+- block:
+    - name: Setup systemd service
+      template:
+        src: wso2am.service.j2
+        dest: "{{ wso2am_systemd_service_path }}"
+      register: wso2am_setup_systemd_result
+
+    - name: Setup wso2am service
+      systemd:
+        name: "{{ (wso2am_systemd_service_path | basename | splitext).0 }}"
+        enabled: yes
+        state: started
+        daemon_reload: "{{ wso2am_setup_systemd_result is changed }}"
+      when: wso2am_manage_service_state | bool
+  tags:
+    - role::wso2am
+    - role::wso2am::service

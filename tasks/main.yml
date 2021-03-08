@@ -3,25 +3,31 @@
 - block:
     - include_tasks: latest.yml
 
-    - include_tasks: install.yml
-      when:
-        - wso2am_state == "present"
-        - wso2am_install_required | bool or wso2am_force_install | bool
+    - include_tasks: uninstall.yml
+      when: >-
+        wso2am_state == "absent"
+        or (wso2am_state == "present"
+            and wso2am_install_required | bool)
 
-    # TODO:
-    # - include_tasks: uninstall.yml
-    #   when: >-
-    #     wso2am_state == "absent"
-    #     or (wso2am_state == "present"
-    #         and wso2am_install_required | bool)
-    #
-    # - include_tasks: cleanup.yml
-    #   tags:
-    #     - role::wso2am::cleanup
+    - block:
+        - include_tasks: install.yml
+          when: wso2am_install_required | bool or wso2am_force_install | bool
+          tags:
+            - role::wso2am::install
 
-    - include_tasks: facts.yml
-      tags:
-        - role::wso2am::facts
+        - include_tasks: configure.yml
+          tags:
+            - role::wso2am::configure
+
+        - include_tasks: service.yml
+          tags:
+            - role::wso2am::service
+
+        - include_tasks: facts.yml
+          tags:
+            - role::wso2am::facts
+      when: wso2am_state == "present"
+
   environment: "{{ proxy_client_environment }}"
   tags:
     - role::wso2am
