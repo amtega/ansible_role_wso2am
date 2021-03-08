@@ -10,7 +10,7 @@
     - name: Setup wso2am local fact
       template:
         src: wso2am.fact.j2
-        dest: /etc/ansible/facts.d/wso2am.fact
+        dest: "{{ wso2am_facts_file_path }}"
         mode: 0640
   tags:
     - role::wso2am::facts

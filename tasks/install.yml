@@ -2,11 +2,6 @@
 # Role install tasks
 
 - block:
-    - name: Setup wso2am destination directory
-      file:
-        path: "{{ wso2am_dir }}"
-        state: directory
-
     - include_tasks: artifact.yml
       vars:
         wso2am_artifact_state: present
@@ -17,19 +12,49 @@
           {{ artifact_result.wso2am.download_path | dirname
              + "/"
              + "wso2am-"
-             + wso2am_effective_version | string
+             + wso2am_effective_version.split("+") | first
              + "/" }}
         dest: "{{ wso2am_dir }}"
         remote_src: yes
+      when: artifact_result.wso2am.changed | bool
+
+    - name: Setup wso2am directory owner and group
+      file:
+        path: "{{ wso2am_dir }}"
+        owner: "{{ wso2am_user }}"
+        recurse: yes
+        group: "{{ wso2am_group }}"
+
+    - name: Setup wso2am directory permissions
+      shell: >-
+        /usr/bin/find {{ wso2am_dir }}
+        -type d
+        -exec chmod -v 750 \{} \; ;
+
+        /usr/bin/find {{ wso2am_dir }}
+        -type f
+        -not -path "{{ wso2am_dir }}/bin/*"
+        -exec chmod -v 640 \{} \; ;
+
+        for f in {{ wso2am_dir }}/bin/*; do
+          if [[ $f == *.sh ]] ; then
+            chmod -v 750 $f ;
+          fi ;
+        done
+      args:
+        warn: no
+      register: wso2am_setup_permissions
+      changed_when: >-
+        wso2am_setup_permissions.stdout_lines
+        | select("search", "changed from .* to .*")
+        | list
+        | length > 0
+      environment:
+        LANGUAGE: en_US
 
     - include_tasks: artifact.yml
       vars:
         wso2am_artifact_state: absent
-
-    - include_tasks: databases/install.yml
-
-    - include_tasks: config/main.yml
-
   tags:
     - role::wso2am
     - role::wso2am::install
