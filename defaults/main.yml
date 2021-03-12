@@ -1,6 +1,10 @@
 ---
 # Role default lower priority variables
 
+# Product profile. Can be wso2am or wso2am-analytics
+
+wso2am_profile: wso2am
+
 # State of the wso2am. Can be present or absent
 
 wso2am_state: present
@@ -20,7 +24,7 @@ wso2am_group: root
 
 # Where to deploy
 
-wso2am_dir: /opt/wso2am
+wso2am_dir: "/opt/{{ wso2am_profile }}"
 
 # Maximum number of processes for wso2am process. Keep in mind that this
 # limit must also be set via ulimit, as this value will only be added to systemd

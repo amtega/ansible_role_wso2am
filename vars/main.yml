@@ -25,7 +25,8 @@ wso2am_official_download_path: >-
      + "/download/v"
      + wso2am_effective_version }}
 
-wso2am_official_download_file: "wso2am-{{ wso2am_effective_version }}.zip"
+wso2am_official_download_file: >-
+  {{ wso2am_profile }}-{{ wso2am_effective_version }}.zip
 
 # Indicate if install is required
 
