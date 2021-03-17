@@ -1,0 +1,5 @@
+---
+
+- name: Load deployment defaults
+  include_vars:
+    file: "{{ wso2am_profile | regex_replace('-', '_') }}.yml"

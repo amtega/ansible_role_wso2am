@@ -4,7 +4,7 @@
 - block:
     - name: Disable and stop wso2am services
       systemd:
-        name: "{{ (wso2am_systemd_service_path | basename | splitext).0 }}"
+        name: "{{ wso2am_systemd_service_name_map[wso2am_profile] }}"
         state: stopped
         enabled: no
         daemon_reload: yes

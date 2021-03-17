@@ -1,13 +1,13 @@
 [Unit]
-Description=WSO2 APi Manager
+Description=WSO2 {{ wso2am_profile }}
 Requires=network-online.target
 After=network-online.target
 
 [Service]
 Type=forking
-RemainAfterExit=yes
-ExecStart={{ wso2am_dir }}/bin/wso2server.sh start
-ExecStop={{ wso2am_dir }}/bin/wso2server.sh stop
+PIDFile={{ wso2am_pid_path_map[wso2am_profile] }}
+ExecStart={{ wso2am_start_command_map[wso2am_profile] }}
+ExecStop={{ wso2am_stop_command_map[wso2am_profile] }}
 Environment="JAVA_HOME={{ wso2am_java_home }}"
 Environment="CARBON_HOME={{ wso2am_dir }}"
 Environment="JAVA_OPTS={{ wso2am_java_opts | join(' ') }}"
@@ -16,6 +16,3 @@ User={{ wso2am_user }}
 Group={{ wso2am_group }}
 LimitNPROC={{ wso2am_limit_nproc }}
 LimitNOFILE={{ wso2am_limit_no_file }}
-
-[Install]
-WantedBy=multi-user.target
