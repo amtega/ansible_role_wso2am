@@ -8,7 +8,8 @@ wso2am_effective_version: >-
      | ternary(wso2am_latest_version, wso2am_version) }}
 
 wso2am_installed_version: >-
-  {{ ansible_local.wso2am.version | default("0") }}
+  {{ ansible_local[wso2am_facts_name_map[wso2am_profile]].version
+     | default("0") }}
 
 # Official download variables
 
@@ -25,7 +26,8 @@ wso2am_official_download_path: >-
      + "/download/v"
      + wso2am_effective_version }}
 
-wso2am_official_download_file: "wso2am-{{ wso2am_effective_version }}.zip"
+wso2am_official_download_file: >-
+  {{ wso2am_profile }}-{{ wso2am_effective_version }}.zip
 
 # Indicate if install is required
 
@@ -47,9 +49,70 @@ wso2am_pakages_os:
       unzip: present
       rsync: present
 
+# Profile maps
+
+wso2am_dir_name_map:
+  wso2am: wso2am
+  analytics: wso2am-analytics
+  dashboard: wso2am-analytics
+
+wso2am_deployment_path_map:
+  wso2am: "{{ wso2am_dir }}/repository/conf/deployment.toml"
+  analytics: "{{ wso2am_dir }}/conf/worker/deployment.yaml"
+  dashboard: "{{ wso2am_dir }}/conf/dashboard/deployment.yaml"
+
+wso2am_pid_path_map:
+  wso2am: "{{ wso2am_dir }}/wso2carbon.pid"
+  analytics: "{{ wso2am_dir }}/wso2/worker/runtime.pid"
+  dashboard: "{{ wso2am_dir }}/wso2/dashboard/runtime.pid"
+
+wso2am_start_command_map:
+  wso2am: "{{ wso2am_dir }}/bin/wso2server.sh start"
+  analytics: "{{ wso2am_dir }}/wso2/worker/bin/carbon.sh start"
+  dashboard: "{{ wso2am_dir }}/wso2/dashboard/bin/carbon.sh start"
+
+wso2am_stop_command_map:
+  wso2am: "{{ wso2am_dir }}/bin/wso2server.sh stop"
+  analytics: "{{ wso2am_dir }}/wso2/worker/bin/carbon.sh stop"
+  dashboard: "{{ wso2am_dir }}/wso2/dashboard/bin/carbon.sh stop"
+
+wso2am_systemd_service_name_map:
+  wso2am: wso2am
+  analytics: wso2am-analytics
+  dashboard: wso2am-dashboard
+
+wso2am_facts_name_map:
+  wso2am: wso2am
+  analytics: wso2am_analytics
+  dashboard: wso2am_dashboard
+
 # Paths
 
-wso2am_systemd_service_path: /lib/systemd/system/wso2am.service
-wso2am_keystore_dir: "{{ wso2am_dir }}/repository/resources/security"
-wso2am_deployment_path: "{{ wso2am_dir }}/repository/conf/deployment.toml"
-wso2am_facts_file_path: /etc/ansible/facts.d/wso2am.fact
+wso2am_default_dir: >-
+  /opt/{{ wso2am_dir_name_map[wso2am_profile] }}/{{ wso2am_effective_version }}
+
+wso2am_deployment_path: "{{ wso2am_deployment_path_map[wso2am_profile] }}"
+
+wso2am_systemd_service_path: >-
+  {{ "/lib/systemd/system/"
+     + wso2am_systemd_service_name_map[wso2am_profile]
+     + ".service" }}
+
+wso2am_facts_file_path: >-
+  /etc/ansible/facts.d/{{ wso2am_facts_name_map[wso2am_profile] }}.fact
+
+# Deployment
+
+wso2am_deployment_defaults: >-
+  {{ lookup("vars",
+            "wso2am_deployment_" + wso2am_profile,
+            default=lookup("vars",
+                           "wso2am_"
+                           + wso2am_profile
+                           + "_deployment_defaults")) }}
+
+# Artifact
+
+wso2am_artifact_id: >-
+  {{ (wso2am_profile == "wso2am")
+     | ternary("wso2am_wso2am", "wso2am_analytics") }}

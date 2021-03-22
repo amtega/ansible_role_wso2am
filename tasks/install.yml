@@ -2,6 +2,7 @@
 # Role install tasks
 
 - block:
+
     - include_tasks: artifact.yml
       vars:
         wso2am_artifact_state: present
@@ -9,14 +10,20 @@
     - name: Install wso2am
       copy:
         src: >-
-          {{ artifact_result.wso2am.download_path | dirname
+          {{ wso2am_artifact_result.download_path | dirname
              + "/"
              + "wso2am-"
+             + (wso2am_profile == "wso2am")
+               | ternary("", "analytics-")
              + wso2am_effective_version.split("+") | first
              + "/" }}
         dest: "{{ wso2am_dir }}"
+        mode: 0750
         remote_src: yes
-      when: artifact_result.wso2am.changed | bool
+      when: wso2am_artifact_result.changed | bool
+      vars:
+        wso2am_artifact_result: >-
+          {{ artifact_result[wso2am_artifact_id] }}
 
     - name: Setup wso2am directory owner and group
       file:
@@ -33,14 +40,13 @@
 
         /usr/bin/find {{ wso2am_dir }}
         -type f
-        -not -path "{{ wso2am_dir }}/bin/*"
+        -not -regex ".*/bin/.*\.sh$"
         -exec chmod -v 640 \{} \; ;
 
-        for f in {{ wso2am_dir }}/bin/*; do
-          if [[ $f == *.sh ]] ; then
-            chmod -v 750 $f ;
-          fi ;
-        done
+        /usr/bin/find {{ wso2am_dir }}
+        -type f
+        -regex ".*/bin/.*\.sh$"
+        -exec chmod -v 750 \{} \; ;
       args:
         warn: no
       register: wso2am_setup_permissions
