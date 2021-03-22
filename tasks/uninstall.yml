@@ -24,7 +24,7 @@
       systemd:
         daemon_reload: >-
           {{ wso2am_remove_systemd_services_result is changed | bool }}
-      
+
     - name: Remove wso2am facts file
       file:
         path: "{{ wso2am_facts_file_path }}"
