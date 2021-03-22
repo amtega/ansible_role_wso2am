@@ -6,6 +6,7 @@
       template:
         src: wso2am.service.j2
         dest: "{{ wso2am_systemd_service_path }}"
+      mode: 0644
       register: wso2am_setup_systemd_result
 
     - name: Reload systemd

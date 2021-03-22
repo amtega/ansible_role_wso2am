@@ -5,6 +5,7 @@
     - name: Create local facts directory
       file:
         path: /etc/ansible/facts.d
+        mode: 0755
         state: directory
 
     - name: Setup wso2am local fact

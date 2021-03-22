@@ -18,6 +18,7 @@
              + wso2am_effective_version.split("+") | first
              + "/" }}
         dest: "{{ wso2am_dir }}"
+        mode: 0750
         remote_src: yes
       when: wso2am_artifact_result.changed | bool
       vars:
