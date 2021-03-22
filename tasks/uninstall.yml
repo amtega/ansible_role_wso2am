@@ -4,7 +4,7 @@
 - block:
     - name: Disable and stop wso2am services
       systemd:
-        name: "{{ (wso2am_systemd_service_path | basename | splitext).0 }}"
+        name: "{{ wso2am_systemd_service_name_map[wso2am_profile] }}"
         state: stopped
         enabled: no
         daemon_reload: yes
@@ -21,8 +21,9 @@
       register: wso2am_remove_systemd_services_result
 
     - name: Reload systemd
-      command: systemctl daemon-reload
-      when: wso2am_remove_systemd_services_result is changed
+      systemd:
+        daemon_reload: >-
+          {{ wso2am_remove_systemd_services_result is changed | bool }}
 
     - name: Remove wso2am facts file
       file:

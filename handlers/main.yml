@@ -3,7 +3,7 @@
 
 - name: Restart wso2am service
   service:
-    name: wso2am
+    name: "{{ wso2am_systemd_service_name_map[wso2am_profile] }}"
     state: restarted
     enabled: yes
   listen: restart wso2am
