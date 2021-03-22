@@ -59,7 +59,7 @@ wso2am_dir_name_map:
 wso2am_deployment_path_map:
   wso2am: "{{ wso2am_dir }}/repository/conf/deployment.toml"
   analytics: "{{ wso2am_dir }}/conf/worker/deployment.yaml"
-  dashboard: "{{ wso2am_dir }}/conf/worker/dashboard.yaml"
+  dashboard: "{{ wso2am_dir }}/conf/dashboard/deployment.yaml"
 
 wso2am_pid_path_map:
   wso2am: "{{ wso2am_dir }}/wso2carbon.pid"
@@ -100,3 +100,19 @@ wso2am_systemd_service_path: >-
 
 wso2am_facts_file_path: >-
   /etc/ansible/facts.d/{{ wso2am_facts_name_map[wso2am_profile] }}.fact
+
+# Deployment
+
+wso2am_deployment_defaults: >-
+  {{ lookup("vars",
+            "wso2am_deployment_" + wso2am_profile,
+            default=lookup("vars",
+                           "wso2am_"
+                           + wso2am_profile
+                           + "_deployment_defaults")) }}
+
+# Artifact
+
+wso2am_artifact_id: >-
+  {{ (wso2am_profile == "wso2am")
+     | ternary("wso2am_wso2am", "wso2am_analytics") }}

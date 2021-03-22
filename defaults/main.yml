@@ -63,9 +63,13 @@ wso2am_java_memory_opts:
 #
 # By default this variable is populated by a set pf default values based on the
 # product profile defined in the variable wso2am_profile
+#
+# If you want you can define deployment vars for each profile using the
+# variables wso2am_deployment_wso2am, wso2am_deployment_analytics and
+# wso2am_deployment_dashboard. This vars will have priority over
+# wso2am_deployment
 
-wso2am_deployment: >-
-  {{ lookup("vars", wso2am_profile + "_deployment_defaults") }}
+wso2am_deployment: "{{ wso2am_deployment_defaults }}"
 
 # Extra args to use when generating keystore certificates
 

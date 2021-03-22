@@ -22,7 +22,7 @@
       when: wso2am_artifact_result.changed | bool
       vars:
         wso2am_artifact_result: >-
-          {{ artifact_result["wso2am_" + wso2am_profile] }}
+          {{ artifact_result[wso2am_artifact_id] }}
 
     - name: Setup wso2am directory owner and group
       file:
@@ -45,7 +45,7 @@
         /usr/bin/find {{ wso2am_dir }}
         -type f
         -regex ".*/bin/.*\.sh$"
-        -exec chmod -v 750 \{} \; ;          
+        -exec chmod -v 750 \{} \; ;
       args:
         warn: no
       register: wso2am_setup_permissions

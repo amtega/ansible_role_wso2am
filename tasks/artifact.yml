@@ -6,11 +6,12 @@
     name: amtega.artifact
   vars:
     override:
-      id: "wso2am_{{ wso2am_profile }}"
+      id: "{{ wso2am_artifact_id }}"
       download: "{{ wso2am_install_required | bool }}"
       version: "{{ wso2am_effective_version }}"
       state: "{{ wso2am_artifact_state }}"
       unarchive: yes
+      unarchive_creates: "{{ wso2am_dir }}"
       owner: "{{ wso2am_user }}"
       group: "{{ wso2am_group }}"
       mode: u=rwX,g=rwX,o=
