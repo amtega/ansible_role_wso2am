@@ -11,6 +11,37 @@
         owner: "{{ wso2am_user }}"
         group: "{{ wso2am_group }}"
         mode: 0640
+
+    - block:
+        - name: Check user stores base directory
+          stat:
+            path: "{{ wso2am_userstores_dir_map[wso2am_profile] }}"
+          register: wso2am_usertores_dir_check_result
+
+        - name: Setup userstores base directory
+          file:
+            path: "{{ wso2am_userstores_dir_map[wso2am_profile] }}"
+            owner: "{{ wso2am_user }}"
+            group: "{{ wso2am_group }}"
+            mode: 0750
+            state: directory
+          when: not wso2am_usertores_dir_check_result.stat.exists
+
+        - name: Setup userstores
+          template:
+            src: userstore.xml.j2
+            dest: >-
+              {{ wso2am_userstores_dir_map[wso2am_profile]
+                 + "/"
+                 + wso2am_usertore
+                 + ".xml" }}
+            owner: "{{ wso2am_user }}"
+            group: "{{ wso2am_group }}"
+            mode: 0640
+          loop: "{{ (wso2am_userstores | default({})).keys() | list }}"
+          loop_control:
+            loop_var: wso2am_usertore
+      when: wso2am_profile == "wso2am"
   tags:
     - role::wso2am
     - role::wso2am::config

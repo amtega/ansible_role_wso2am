@@ -61,6 +61,9 @@ wso2am_deployment_path_map:
   analytics: "{{ wso2am_dir }}/conf/worker/deployment.yaml"
   dashboard: "{{ wso2am_dir }}/conf/dashboard/deployment.yaml"
 
+wso2am_userstores_dir_map:
+  wso2am: "{{ wso2am_dir }}/repository/deployment/server/userstores"
+
 wso2am_pid_path_map:
   wso2am: "{{ wso2am_dir }}/wso2carbon.pid"
   analytics: "{{ wso2am_dir }}/wso2/worker/runtime.pid"
