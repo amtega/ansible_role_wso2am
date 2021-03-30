@@ -1,0 +1,17 @@
+{%- macro render_value(value) -%}
+{%- if value is boolean -%}
+{{ value | string | lower }}
+{%- else -%}
+{{ value | string }}
+{%- endif -%}
+{%- endmacro -%}
+
+<UserStoreManager class="org.wso2.carbon.user.core.ldap.ActiveDirectoryUserStoreManager">
+{% for property in wso2am_userstores[wso2am_usertore].keys() | list %}
+{% if wso2am_userstores[wso2am_usertore][property] is not none %}
+  <Property name="{{ property }}">{{ render_value(wso2am_userstores[wso2am_usertore][property]) }}</Property>
+{% else %}
+  <Property name="{{ property }}" />
+{% endif %}
+{% endfor %}
+</UserStoreManager>
