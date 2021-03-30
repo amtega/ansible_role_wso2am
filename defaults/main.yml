@@ -71,12 +71,25 @@ wso2am_java_memory_opts:
 
 wso2am_deployment: "{{ wso2am_deployment_defaults }}"
 
-# Extra args to use when generating keystore certificates
+# Dictionary with the userstores to setup. The format of the dict is the
+# following:
+#
+# {
+#   <userstore1:>
+#     <property1>: <value1>
+#     <property2>: <value2>
+#     <propertyN>: <valueN>
+#   <userstore2:>
+#     <property1>: <value1>
+#     <property2>: <value2>
+#     <propertyN>: <valueN>
+#   <userstoreN:>
+#     <property1>: <value1>
+#     <property2>: <value2>
+#     <propertyN>: <valueN>
+# }
 
-wso2am_keystore_keygen_extra_args:
-  - "-sigalg SHA256withRSA"
-  - "-keyalg RSA"
-  - "-validity 3650"
+#wso2am_userstores:
 
 # Indicate if the role must manage service state. May be useful to set it to no
 # if you need to setup aditional stuff after setup before starting the service
