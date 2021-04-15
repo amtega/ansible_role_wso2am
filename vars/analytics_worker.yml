@@ -1,6 +1,6 @@
 ---
 
-wso2am_analytics_deployment_defaults:
+wso2am_analytics_worker_deployment_defaults:
   wso2.carbon:
     type: wso2-apim-analytics
     id: wso2-am-analytics
