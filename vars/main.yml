@@ -53,41 +53,41 @@ wso2am_pakages_os:
 
 wso2am_dir_name_map:
   wso2am: wso2am
-  analytics: wso2am-analytics
-  dashboard: wso2am-analytics
+  analytics_worker: wso2am-analytics
+  analytics_dashboard: wso2am-analytics
 
 wso2am_deployment_path_map:
   wso2am: "{{ wso2am_dir }}/repository/conf/deployment.toml"
-  analytics: "{{ wso2am_dir }}/conf/worker/deployment.yaml"
-  dashboard: "{{ wso2am_dir }}/conf/dashboard/deployment.yaml"
+  analytics_worker: "{{ wso2am_dir }}/conf/worker/deployment.yaml"
+  analytics_dashboard: "{{ wso2am_dir }}/conf/dashboard/deployment.yaml"
 
 wso2am_userstores_dir_map:
   wso2am: "{{ wso2am_dir }}/repository/deployment/server/userstores"
 
 wso2am_pid_path_map:
   wso2am: "{{ wso2am_dir }}/wso2carbon.pid"
-  analytics: "{{ wso2am_dir }}/wso2/worker/runtime.pid"
-  dashboard: "{{ wso2am_dir }}/wso2/dashboard/runtime.pid"
+  analytics_worker: "{{ wso2am_dir }}/wso2/worker/runtime.pid"
+  analytics_dashboard: "{{ wso2am_dir }}/wso2/dashboard/runtime.pid"
 
 wso2am_start_command_map:
   wso2am: "{{ wso2am_dir }}/bin/wso2server.sh start"
-  analytics: "{{ wso2am_dir }}/wso2/worker/bin/carbon.sh start"
-  dashboard: "{{ wso2am_dir }}/wso2/dashboard/bin/carbon.sh start"
+  analytics_worker: "{{ wso2am_dir }}/wso2/worker/bin/carbon.sh start"
+  analytics_dashboard: "{{ wso2am_dir }}/wso2/dashboard/bin/carbon.sh start"
 
 wso2am_stop_command_map:
   wso2am: "{{ wso2am_dir }}/bin/wso2server.sh stop"
-  analytics: "{{ wso2am_dir }}/wso2/worker/bin/carbon.sh stop"
-  dashboard: "{{ wso2am_dir }}/wso2/dashboard/bin/carbon.sh stop"
+  analytics_worker: "{{ wso2am_dir }}/wso2/worker/bin/carbon.sh stop"
+  analytics_dashboard: "{{ wso2am_dir }}/wso2/dashboard/bin/carbon.sh stop"
 
 wso2am_systemd_service_name_map:
   wso2am: wso2am
-  analytics: wso2am-analytics
-  dashboard: wso2am-dashboard
+  analytics_worker: wso2am-analytics
+  analytics_dashboard: wso2am-dashboard
 
 wso2am_facts_name_map:
   wso2am: wso2am
-  analytics: wso2am_analytics
-  dashboard: wso2am_dashboard
+  analytics_worker: wso2am_analytics
+  analytics_dashboard: wso2am_dashboard
 
 # Paths
 

@@ -1,7 +1,7 @@
 ---
 # Role default lower priority variables
 
-# Product profile. Can be wso2am, analytics and dashboard
+# Product profile. Can be wso2am, analytics_worker and analytics_dashboard
 
 wso2am_profile: wso2am
 
@@ -65,8 +65,8 @@ wso2am_java_memory_opts:
 # product profile defined in the variable wso2am_profile
 #
 # If you want you can define deployment vars for each profile using the
-# variables wso2am_deployment_wso2am, wso2am_deployment_analytics and
-# wso2am_deployment_dashboard. This vars will have priority over
+# variables wso2am_deployment_wso2am, wso2am_deployment_analytics_worker and
+# wso2am_deployment_analytics_dashboard. This vars will have priority over
 # wso2am_deployment
 
 wso2am_deployment: "{{ wso2am_deployment_defaults }}"
