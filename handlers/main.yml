@@ -7,6 +7,7 @@
     state: restarted
     enabled: yes
   listen: restart wso2am
+  when: wso2am_manage_service_state | bool
   tags:
     - role::wso2am
     - role::wso2am::restart
