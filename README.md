@@ -9,6 +9,7 @@ A list of all the default variables for this role is available in `defaults/main
 The role setups the following facts:
 
 - `wso2am_latest_version`: latest version of wso2am available on the web. This fact is only available if you are downloading from the official site.
+- `wso2am_needs_restart`: when variable `wso2am_manage_service_state` is set to false this fact indicates if wso2am service needs to be restarted after changes.
 
 ## Example Playbook
 
