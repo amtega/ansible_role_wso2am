@@ -11,6 +11,9 @@
         owner: "{{ wso2am_user }}"
         group: "{{ wso2am_group }}"
         mode: 0640
+      register: wso2am_deployment_config_result
+      notify:
+        - restart wso2am
 
     - block:
         - name: Check user stores base directory
@@ -38,6 +41,9 @@
             owner: "{{ wso2am_user }}"
             group: "{{ wso2am_group }}"
             mode: 0640
+          register: wso2am_userstores_config_result
+          notify:
+            - restart wso2am
           loop: "{{ (wso2am_userstores | default({})).keys() | list }}"
           loop_control:
             loop_var: wso2am_usertore

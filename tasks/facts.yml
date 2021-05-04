@@ -2,6 +2,14 @@
 # Role facts tasks
 
 - block:
+    - name: Setup fact indicating wso2am service needs restart
+      set_fact:
+        wso2am_needs_restart: >-
+          {{ not wso2am_manage_service_state | bool
+             and (wso2am_deployment_config_result is changed
+                  or (wso2am_profile == "wso2am"
+                      and wso2am_userstores_config_result is changed)) }}
+
     - name: Create local facts directory
       file:
         path: /etc/ansible/facts.d
