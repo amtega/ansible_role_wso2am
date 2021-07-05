@@ -9,11 +9,12 @@
 {%- endmacro -%}
 
 {{ "\n" }}
-{% for section in wso2am_deployment.keys() | list %}
-{% if wso2am_deployment[section] is mapping %}
+{% for item in wso2am_deployment %}
+{% for section in item.keys() | list %}
+{% if item[section] is mapping %}
 {{ section }}
-{% for option in wso2am_deployment[section].keys() | list %}
-{{ option }} = {{ render_value(wso2am_deployment[section][option]) }}
+{% for option in item[section].keys() | list %}
+{{ option }} = {{ render_value(item[section][option]) }}
 {% endfor %}
 
 {% else %}
@@ -25,4 +26,5 @@
 
 {% endfor %}
 {% endif %}
+{% endfor %}
 {% endfor %}

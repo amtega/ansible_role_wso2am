@@ -43,6 +43,7 @@ wso2am_install_required: >-
 wso2am_pakages_os:
   all:
     all:
+      findutils: present
       tar: present
       unzip: present
       rsync: present
