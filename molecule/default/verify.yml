@@ -4,4 +4,9 @@
   hosts: molecule_hosts
   gather_facts: no
   tasks:
-    - debug: msg="Verify to be done"
+    - name: Gather service facts
+      service_facts:
+
+    - name: Check wso2am service
+      assert:
+        that: ansible_facts.services["wso2am.service"]["state"] == "running"

@@ -15,7 +15,7 @@
       owner: "{{ wso2am_user }}"
       group: "{{ wso2am_group }}"
       mode: u=rwX,g=rwX,o=
-      no_log: "{{ wso2am_no_log | bool }}"
+      no_log: "{{ wso2am_no_log | bool }}"      
     artifact: "{{ wso2am_artifact | combine(override) }}"
   tags:
     - role::wso2am
