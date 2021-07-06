@@ -7,6 +7,6 @@
     - name: Gather service facts
       service_facts:
 
-    - name: Check w2oam service
+    - name: Check wso2am service
       assert:
         that: ansible_facts.services["wso2am.service"]["state"] == "running"

@@ -15,6 +15,7 @@ wso2am_analytics_worker_deployment_defaults:
 
       - name: client.bootstrap.socket.timeout
         value: 60
+        
       - name: latency.metrics.enabled
         value: true
 

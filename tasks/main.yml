@@ -7,10 +7,7 @@
     - include_tasks: latest.yml
 
     - include_tasks: uninstall.yml
-      when: >-
-        wso2am_state == "absent"
-        or (wso2am_state == "present"
-            and wso2am_install_required | bool)
+      when: wso2am_state == "absent"
 
     - block:
         - include_tasks: install.yml

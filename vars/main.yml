@@ -27,7 +27,11 @@ wso2am_official_download_path: >-
      + wso2am_effective_version }}
 
 wso2am_official_download_file: >-
-  {{ wso2am_profile }}-{{ wso2am_effective_version }}.zip
+  {{ (wso2am_profile == "wso2am")
+     | ternary("wso2am", "wso2am-analytics")
+     + "-"
+     + wso2am_effective_version
+     + ".zip" }}
 
 # Indicate if install is required
 
