@@ -12,7 +12,7 @@ wso2am_state: present
 # Version of wso2am to deploy. You can use the keyword latest to install the
 # latest available version
 
-wso2am_version: latest
+wso2am_version: 3.2.0
 
 # Operating system user
 
@@ -50,7 +50,8 @@ wso2am_java_memory_opts:
   - "-Xms512m"
   - "-Xmx3072m"
 
-# Dict wirh deployment settings. The format of the dict is the following:
+# Deployment settings. For wso2am profile the variable is a list of dicts where
+# each dict has the following format:
 #
 # {
 #   <section1>:
@@ -60,6 +61,8 @@ wso2am_java_memory_opts:
 #   <section2>: ...
 #   <sectionN>: ...
 # }
+#
+# For te other profiles the variable is a dictionary containing the config.
 #
 # By default this variable is populated by a set pf default values based on the
 # product profile defined in the variable wso2am_profile

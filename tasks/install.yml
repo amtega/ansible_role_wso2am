@@ -2,10 +2,14 @@
 # Role install tasks
 
 - block:
-
     - include_tasks: artifact.yml
       vars:
         wso2am_artifact_state: present
+
+    - name: Setup wso2am base directory
+      file:
+        path: "{{ wso2am_dir | dirname }}"
+        state: directory
 
     - name: Install wso2am
       copy:

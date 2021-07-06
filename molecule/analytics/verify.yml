@@ -1,0 +1,19 @@
+---
+
+- name: Verify
+  hosts: molecule_hosts
+  gather_facts: no
+  tasks:
+    - name: Gather service facts
+      service_facts:
+
+    - name: Check wso2am analytics services
+      assert:
+        that:
+          - >-
+            ansible_facts.services["wso2am-analytics.service"]["state"]
+            == "running"
+
+          - >-
+            ansible_facts.services["wso2am-analytics.dashboard"]["state"] 
+            == "running"
