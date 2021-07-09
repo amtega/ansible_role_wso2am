@@ -15,7 +15,7 @@ wso2am_analytics_worker_deployment_defaults:
 
       - name: client.bootstrap.socket.timeout
         value: 60
-        
+
       - name: latency.metrics.enabled
         value: true
 
@@ -84,77 +84,77 @@ wso2am_analytics_worker_deployment_defaults:
 
   data.agent.config:
     agents:
-    - agentConfiguration:
-        name: Thrift
-        dataEndpointClass: >-
-          {{ "org.wso2.carbon.databridge.agent.endpoint.thrift."
-             + "ThriftDataEndpoint" }}
-        publishingStrategy: async
-        trustStorePath: >-
-          ${sys:carbon.home}/resources/security/client-truststore.jks
-        trustStorePassword: 'wso2carbon'
-        queueSize: 32768
-        batchSize: 200
-        corePoolSize: 1
-        socketTimeoutMS: 30000
-        maxPoolSize: 1
-        keepAliveTimeInPool: 20
-        reconnectionInterval: 30
-        maxTransportPoolSize: 250
-        maxIdleConnections: 250
-        evictionTimePeriod: 5500
-        minIdleTimeInPool: 5000
-        secureMaxTransportPoolSize: 250
-        secureMaxIdleConnections: 250
-        secureEvictionTimePeriod: 5500
-        secureMinIdleTimeInPool: 5000
-        sslEnabledProtocols: TLSv1.1,TLSv1.2
-        ciphers: >-
-          {{ "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,"
-             + "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,"
-             + "TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,"
-             + "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,"
-             + "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,"
-             + "TLS_DHE_RSA_WITH_AES_128_CBC_SHA,"
-             + "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,"
-             + "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,"
-             + "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256" }}
+      - agentConfiguration:
+          name: Thrift
+          dataEndpointClass: >-
+            {{ "org.wso2.carbon.databridge.agent.endpoint.thrift."
+               + "ThriftDataEndpoint" }}
+          publishingStrategy: async
+          trustStorePath: >-
+            ${sys:carbon.home}/resources/security/client-truststore.jks
+          trustStorePassword: 'wso2carbon'
+          queueSize: 32768
+          batchSize: 200
+          corePoolSize: 1
+          socketTimeoutMS: 30000
+          maxPoolSize: 1
+          keepAliveTimeInPool: 20
+          reconnectionInterval: 30
+          maxTransportPoolSize: 250
+          maxIdleConnections: 250
+          evictionTimePeriod: 5500
+          minIdleTimeInPool: 5000
+          secureMaxTransportPoolSize: 250
+          secureMaxIdleConnections: 250
+          secureEvictionTimePeriod: 5500
+          secureMinIdleTimeInPool: 5000
+          sslEnabledProtocols: TLSv1.1,TLSv1.2
+          ciphers: >-
+            {{ "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,"
+               + "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,"
+               + "TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,"
+               + "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,"
+               + "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,"
+               + "TLS_DHE_RSA_WITH_AES_128_CBC_SHA,"
+               + "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,"
+               + "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,"
+               + "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256" }}
 
-    - agentConfiguration:
-        name: Binary
-        dataEndpointClass: >-
-          {{ "org.wso2.carbon.databridge.agent.endpoint.binary."
-             + "BinaryDataEndpoint" }}
-        publishingStrategy: async
-        trustStorePath: >-
-          ${sys:carbon.home}/resources/security/client-truststore.jks
-        trustStorePassword: wso2carbon
-        queueSize: 32768
-        batchSize: 200
-        corePoolSize: 1
-        socketTimeoutMS: 30000
-        maxPoolSize: 1
-        keepAliveTimeInPool: 20
-        reconnectionInterval: 30
-        maxTransportPoolSize: 250
-        maxIdleConnections: 250
-        evictionTimePeriod: 5500
-        minIdleTimeInPool: 5000
-        secureMaxTransportPoolSize: 250
-        secureMaxIdleConnections: 250
-        secureEvictionTimePeriod: 5500
-        secureMinIdleTimeInPool: 5000
-        sslEnabledProtocols: TLSv1.1,TLSv1.2
-        ciphers: >-
-          {{ "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,"
-             + "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,"
-             + "TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,"
-             + "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,"
-             + "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,"
-             + "TLS_DHE_RSA_WITH_AES_128_CBC_SHA,"
-             + "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,"
-             + "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,"
-             + "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256" }}
+      - agentConfiguration:
+          name: Binary
+          dataEndpointClass: >-
+            {{ "org.wso2.carbon.databridge.agent.endpoint.binary."
+               + "BinaryDataEndpoint" }}
+          publishingStrategy: async
+          trustStorePath: >-
+            ${sys:carbon.home}/resources/security/client-truststore.jks
+          trustStorePassword: wso2carbon
+          queueSize: 32768
+          batchSize: 200
+          corePoolSize: 1
+          socketTimeoutMS: 30000
+          maxPoolSize: 1
+          keepAliveTimeInPool: 20
+          reconnectionInterval: 30
+          maxTransportPoolSize: 250
+          maxIdleConnections: 250
+          evictionTimePeriod: 5500
+          minIdleTimeInPool: 5000
+          secureMaxTransportPoolSize: 250
+          secureMaxIdleConnections: 250
+          secureEvictionTimePeriod: 5500
+          secureMinIdleTimeInPool: 5000
+          sslEnabledProtocols: TLSv1.1,TLSv1.2
+          ciphers: >-
+            {{ "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,"
+               + "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,"
+               + "TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,"
+               + "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,"
+               + "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,"
+               + "TLS_DHE_RSA_WITH_AES_128_CBC_SHA,"
+               + "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,"
+               + "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,"
+               + "TLS_DHE_RSA_WITH_AES_128_GCM_SHA256" }}
 
   wso2.metrics:
     enabled: false
@@ -379,11 +379,11 @@ wso2am_analytics_worker_deployment_defaults:
       adminRole: admin
       userStore:
         users:
-         - user:
-             username: admin
-             password: "{{ 'admin' | b64encode }}"
-             roles: 1
+          - user:
+              username: admin
+              password: "{{ 'admin' | b64encode }}"
+              roles: 1
         roles:
-         - role:
-             id: 1
-             displayName: admin
+          - role:
+              id: 1
+              displayName: admin

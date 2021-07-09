@@ -1,7 +1,7 @@
 ---
 # Role install tasks
 
-- block:   
+- block:
     - include_tasks: artifact.yml
       vars:
         wso2am_artifact_state: present
@@ -10,6 +10,7 @@
       file:
         path: "{{ wso2am_dir | dirname }}"
         state: directory
+        mode: 0640
 
     - name: Install wso2am
       copy:

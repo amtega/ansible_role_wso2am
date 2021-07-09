@@ -2,3 +2,5 @@
 
 exclude_paths:
   - meta
+  - vars/analytics_worker.yml
+  - vars/analytics_dashboard.yml

@@ -258,14 +258,14 @@ wso2am_analytics_dashboard_deployment_defaults:
     datasource: BUSINESS_RULES_DB
     deployment_configs:
       - localhost:9444:
-         - stock-data-analysis
-         - stock-exchange-input
-         - stock-exchange-output
-         - identifying-continuous-production-decrease
-         - popular-tweets-analysis
-         - http-analytics-processing
-         - message-tracing-source-template
-         - message-tracing-app-template
+          - stock-data-analysis
+          - stock-exchange-input
+          - stock-exchange-output
+          - identifying-continuous-production-decrease
+          - popular-tweets-analysis
+          - http-analytics-processing
+          - message-tracing-source-template
+          - message-tracing-app-template
     username: admin
     password: admin
 

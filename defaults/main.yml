@@ -115,13 +115,13 @@ wso2am_force_install: no
 # necessary
 
 wso2am_artifact:
-    type: https
-    host: "{{ wso2am_official_download_host }}"
-    path: "{{ wso2am_official_download_path }}"
-    file: "{{ wso2am_official_download_file }}"
-    dest: /tmp
-    timeout: 120
-    validate_certs: yes
+  type: https
+  host: "{{ wso2am_official_download_host }}"
+  path: "{{ wso2am_official_download_path }}"
+  file: "{{ wso2am_official_download_file }}"
+  dest: /tmp
+  timeout: 120
+  validate_certs: yes
 
 # Hide sensitive information
 
