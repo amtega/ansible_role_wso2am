@@ -6,6 +6,8 @@
   tasks:
     - include_role:
         name: amtega.wso2am
+      vars:
+        wso2am_profile: analytics_worker
 
     - include_role:
         name: amtega.wso2am

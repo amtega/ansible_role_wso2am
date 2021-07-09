@@ -1,7 +1,7 @@
 ---
 # Role install tasks
 
-- block:
+- block:   
     - include_tasks: artifact.yml
       vars:
         wso2am_artifact_state: present
