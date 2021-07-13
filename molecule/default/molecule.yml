@@ -81,6 +81,7 @@ provisioner:
       molecule_hosts:
         vars:
           wso2am_profile: wso2am
+          wso2am_state: present
       molecule_hosts_fedora:
         vars:
           ansible_python_interpreter: /usr/bin/python3
