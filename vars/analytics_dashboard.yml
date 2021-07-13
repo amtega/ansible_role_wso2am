@@ -1,5 +1,7 @@
 ---
 
+# yamllint disable rule:truthy
+
 wso2am_analytics_dashboard_deployment_defaults:
   wso2.carbon:
     type: wso2-apim-analytics
