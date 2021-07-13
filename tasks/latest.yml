@@ -16,18 +16,18 @@
     - name: Setup wso2am latest version
       when: wso2am_version == "latest"
       set_fact:
-         wso2am_latest_version: >-
-           {{ lookup("url",
-                     wso2am_official_download_releases_url,
-                     wantlist=True)
-              | select("search", "/releases/tag")
-              | reject("search", "-M[0-9]*")
-              | reject("search", "-RC[0-9]*")
-              | reject("search", "-beta[0-9]*")
-              | reject("search", "-alpha[0-9]*")
-              | first
-              | regex_replace('.*/releases/tag/v(.*)".*', '\1')
-              | trim }}
+        wso2am_latest_version: >-
+          {{ lookup("url",
+                    wso2am_official_download_releases_url,
+                    wantlist=True)
+             | select("search", "/releases/tag")
+             | reject("search", "-M[0-9]*")
+             | reject("search", "-RC[0-9]*")
+             | reject("search", "-beta[0-9]*")
+             | reject("search", "-alpha[0-9]*")
+             | first
+             | regex_replace('.*/releases/tag/v(.*)".*', '\1')
+             | trim }}
   when: wso2am_version == "latest"
   tags:
     - role::wso2am

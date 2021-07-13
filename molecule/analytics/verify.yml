@@ -15,5 +15,5 @@
             == "running"
 
           - >-
-            ansible_facts.services["wso2am-analytics.dashboard"]["state"] 
+            ansible_facts.services["wso2am-dashboard.service"]["state"]
             == "running"

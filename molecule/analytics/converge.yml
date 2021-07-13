@@ -4,10 +4,14 @@
   hosts: molecule_hosts
   gather_facts: yes
   tasks:
-    - include_role:
+    - name: Setup analytics worker
+      include_role:
         name: amtega.wso2am
+      vars:
+        wso2am_profile: analytics_worker
 
-    - include_role:
+    - name: Setup analytics dashboard
+      include_role:
         name: amtega.wso2am
       vars:
         wso2am_profile: analytics_dashboard
