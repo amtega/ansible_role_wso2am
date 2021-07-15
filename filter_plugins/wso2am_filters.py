@@ -16,18 +16,7 @@ class AnsibleTomlEncoder(TomlEncoder):
         self.dump_funcs[AnsibleUnsafeText] = self.dump_funcs[str]
 
     def dump_sections(self, o, sup):
-        # print("$$$$$$$$$$%%%$$")
-        # print(o)
-        # print("$$$")
-        # print(sup)
-        # print("!!!!!")
-        # for section in o:
-        #     print(section)
-        # result =
-        # print("$$$$$$$$$$")
-        # print(result)
         return super(AnsibleTomlEncoder, self).dump_sections(o, sup)
-
 
 def wso2am_mix_deployment(target_deployment, source_deployment):
     """Mix two deployment dicts
