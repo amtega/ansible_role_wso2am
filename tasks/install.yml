@@ -10,7 +10,7 @@
       file:
         path: "{{ wso2am_dir | dirname }}"
         state: directory
-        mode: 0640
+        mode: 0755
 
     - name: Install wso2am
       copy:
