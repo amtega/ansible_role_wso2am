@@ -54,9 +54,9 @@
         -exec chmod -v 750 \{} \; ;
       args:
         warn: no
-      register: wso2am_setup_permissions
+      register: wso2am_setup_permissions_result
       changed_when: >-
-        wso2am_setup_permissions.stdout_lines
+        wso2am_setup_permissions_result.stdout_lines
         | select("search", "changed from .* to .*")
         | list
         | length > 0
