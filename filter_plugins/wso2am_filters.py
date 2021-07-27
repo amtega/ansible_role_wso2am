@@ -4,6 +4,8 @@ __metaclass__ = type
 
 from ansible.parsing.yaml.objects import AnsibleMapping
 from ansible.utils.unsafe_proxy import AnsibleUnsafeText
+
+from re import sub
 from toml import dumps, TomlEncoder
 
 
@@ -18,12 +20,13 @@ class AnsibleTomlEncoder(TomlEncoder):
     def dump_sections(self, o, sup):
         return super(AnsibleTomlEncoder, self).dump_sections(o, sup)
 
+
 def wso2am_mix_deployment(target_deployment, source_deployment):
     """Mix two deployment dicts
 
     Args:
         target_deployment (dict): dict with the target deployment
-        target_deployment (dict): dict with the source deployment to mix
+        source_deployment (dict): dict with the source deployment to mix
 
     Returns:
         dict: dict with the deployments mixed
@@ -31,14 +34,30 @@ def wso2am_mix_deployment(target_deployment, source_deployment):
     result = AnsibleMapping(target_deployment.items())
 
     for k in source_deployment.keys():
-        result[k] = source_deployment[k]
+        if k not in result.keys():
+            result[k] = source_deployment[k]
+        else:
+            if isinstance(result[k], dict):
+                result[k] = wso2am_mix_deployment(result[k],
+                                                  source_deployment[k])
+            elif isinstance(result[k], list):
+                unique_list = list()
+                for x in result[k] + source_deployment[k]:
+                     if x not in unique_list:
+                         unique_list.append(x)
+
+                result[k] = unique_list
+            else:
+                result[k] = source_deployment[k]
 
     return result
 
 
 def wso2am_to_toml(data):
     """Convert the value to TOML"""
-    return dumps(data, encoder=AnsibleTomlEncoder())
+    return sub('"(.*)" = (.*)',
+               '\\1 = \\2',
+               dumps(data, encoder=AnsibleTomlEncoder()))
 
 
 class FilterModule(object):
