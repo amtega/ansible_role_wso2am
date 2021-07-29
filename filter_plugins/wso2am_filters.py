@@ -55,9 +55,11 @@ def wso2am_mix_deployment(target_deployment, source_deployment):
 
 def wso2am_to_toml(data):
     """Convert the value to TOML"""
-    return sub('"(.*)" = (.*)',
-               '\\1 = \\2',
-               dumps(data, encoder=AnsibleTomlEncoder()))
+    toml = dumps(data, encoder=AnsibleTomlEncoder())
+    result = sub('"(.*)" = (.*)', '\\1 = \\2', toml)
+    result = sub('\n\[.*\]\n(\[.*\])', '\n\\1', result)
+
+    return result
 
 
 class FilterModule(object):
