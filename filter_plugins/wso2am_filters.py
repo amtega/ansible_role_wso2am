@@ -43,8 +43,8 @@ def wso2am_mix_deployment(target_deployment, source_deployment):
             elif isinstance(result[k], list):
                 unique_list = list()
                 for x in result[k] + source_deployment[k]:
-                     if x not in unique_list:
-                         unique_list.append(x)
+                    if x not in unique_list:
+                        unique_list.append(x)
 
                 result[k] = unique_list
             else:
@@ -56,8 +56,8 @@ def wso2am_mix_deployment(target_deployment, source_deployment):
 def wso2am_to_toml(data):
     """Convert the value to TOML"""
     toml = dumps(data, encoder=AnsibleTomlEncoder())
-    result = sub('"(.*)" = (.*)', '\\1 = \\2', toml)
-    result = sub('\n\[.*\]\n(\[.*\])', '\n\\1', result)
+    result = sub(r'"(.*)" = (.*)', '\\1 = \\2', toml)
+    result = sub(r'\n\[.*\]\n(\[.*\])', '\n\\1', result)
 
     return result
 

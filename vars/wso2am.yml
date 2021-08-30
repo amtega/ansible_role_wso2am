@@ -49,8 +49,8 @@ wso2am_wso2am_deployment_defaults:
         type: hybrid
         display_in_api_console: yes
         description: >-
-          This is a hybrid gateway that handles both production and sandbox token
-          traffic.
+          This is a hybrid gateway that handles both production and sandbox
+          token traffic.
         show_as_token_endpoint_url: yes
         service_url: >-
           https://localhost:${mgt.transport.https.port}/services/
