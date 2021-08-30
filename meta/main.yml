@@ -39,3 +39,4 @@ dependencies:
   - role: amtega.packages
     vars:
       packages_os: "{{ wso2am_pakages_os }}"
+      packages_python: "{{ wso2am_pakages_python }}"
