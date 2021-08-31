@@ -8,8 +8,7 @@ wso2am_effective_version: >-
      | ternary(wso2am_latest_version, wso2am_version) }}
 
 wso2am_installed_version: >-
-  {{ ansible_local[wso2am_facts_name_map[wso2am_profile]].version
-     | default("0") }}
+  {{ lookup("template", "installed_version.j2") | trim }}
 
 # Official download variables
 

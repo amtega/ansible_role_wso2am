@@ -84,7 +84,7 @@ wso2am_wso2am_deployment_defaults:
       subscriptions:
         - POST_ADD_USER
 
-  service_provider":
+  service_provider:
     sp_name_regex: ^[\\sa-zA-Z0-9._-]*$
 
   event_listener:
@@ -93,8 +93,8 @@ wso2am_wso2am_deployment_defaults:
       name: org.wso2.is.notification.ApimOauthEventInterceptor
       order: 1
       properties:
-        - notification_endpoint: >-
-            https://localhost:${mgt.transport.https.port}/internal/data/v1/notify
-          username: ${admin.username}
-          password: ${admin.password}
-          header.X-WSO2-KEY-MANAGER: default
+        notification_endpoint: >-
+          https://localhost:${mgt.transport.https.port}/internal/data/v1/notify
+        username: ${admin.username}
+        password: ${admin.password}
+        header.X-WSO2-KEY-MANAGER: default
