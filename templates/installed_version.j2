@@ -1,0 +1,25 @@
+{%- set fact_name = wso2am_facts_name_map[wso2am_profile] -%}
+{%- if wso2am_profile == "wso2am" -%}
+  {{ ansible_local[fact_name].version | default("0") }}
+{%- else -%}
+  {%- if wso2am_profile == "analytics_worker" -%}
+    {%- set partner_fact_name = wso2am_facts_name_map["analytics_dashboard"] -%}
+  {%- else -%}
+    {%- set partner_fact_name = wso2am_facts_name_map["analytics_worker"] -%}
+  {%- endif -%}
+
+  {% set partner_wso2am_version = ansible_local[partner_fact_name].version | default(none) -%}
+  {% set partner_wso2am_dir = ansible_local[partner_fact_name].directory | default(none) -%}
+
+  {%- if wso2am_dir == partner_wso2am_dir -%}
+    {%- set shared_analytics = true -%}
+  {%- else -%}
+    {%- set shared_analytics = false -%}
+  {%- endif -%}
+
+  {%- if shared_analytics -%}
+    {{ ansible_local[partner_fact_name].version }}
+  {%- else -%}
+    {{ ansible_local[fact_name].version | default("0") }}
+  {%- endif -%}
+{%- endif -%}
