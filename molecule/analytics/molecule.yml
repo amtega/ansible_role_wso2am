@@ -67,7 +67,7 @@ platforms:
       - molecule_hosts_fedora
       - molecule_hosts_fedora_34
 provisioner:
-  name: ansible
+  name: ansible  
   playbooks:
     prepare: ../resources/prepare.yml
     cleanup: ../resources/cleanup.yml
