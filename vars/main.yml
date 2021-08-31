@@ -52,6 +52,11 @@ wso2am_pakages_os:
       unzip: present
       rsync: present
 
+wso2am_pakages_python:
+  all:
+    all:
+      toml: present
+
 # Profile maps
 
 wso2am_dir_name_map:
